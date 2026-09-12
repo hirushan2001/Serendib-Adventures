@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --background: 140 20% 96%;
+  --foreground: 155 30% 12%;
+  --card: 140 15% 98%;
+  --card-foreground: 155 30% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 155 30% 12%;
+  --primary: 160 50% 20%;
+  --primary-foreground: 90 20% 98%;
+  --secondary: 90 15% 90%;
+  --secondary-foreground: 155 30% 12%;
+  --muted: 94 10% 92%;
+  --muted-foreground: 155 10% 40%;
+  --accent: 38 90% 55%;
+  --accent-foreground: 155 30% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 140 10% 85%;
+  --input: 140 10% 85%;
+  --ring: 158 50% 30%;
+  --forest: 161 50% 15%;
+  --hero-foreground: 90 20% 99%;
+  --hero-muted: 94 10% 85%;
+  --hero-accent: 38 90% 60%;
+
+  --font-display: "Manrope", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+}
+
+.dark {
+  --background: 160 30% 6%;
+  --foreground: 90 20% 98%;
+  --card: 160 25% 10%;
+  --card-foreground: 90 20% 98%;
+  --popover: 160 25% 10%;
+  --popover-foreground: 90 20% 98%;
+  --primary: 38 90% 55%;
+  --primary-foreground: 160 30% 6%;
+  --secondary: 160 20% 16%;
+  --secondary-foreground: 90 20% 98%;
+  --muted: 160 20% 16%;
+  --muted-foreground: 155 10% 65%;
+  --accent: 38 90% 55%;
+  --accent-foreground: 160 30% 6%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 90 20% 98%;
+  --border: 160 20% 18%;
+  --input: 160 20% 18%;
+  --ring: 38 90% 55%;
+  --forest: 161 50% 12%;
+  --hero-foreground: 90 20% 99%;
+  --hero-muted: 94 10% 85%;
+  --hero-accent: 38 90% 60%;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.page-shell {
+  width: min(100% - 2rem, 80rem);
+  margin-inline: auto;
+}
+
+.section-pad {
+  padding-block: clamp(4.5rem, 8vw, 8rem);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-scrim {
+  background: linear-gradient(90deg, rgba(13, 27, 21, 0.88), rgba(13, 27, 21, 0.35) 70%),
+              linear-gradient(0deg, rgba(13, 27, 21, 0.65), transparent 45%);
+}
+
+.nav-link {
+  position: relative;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+.field-label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.form-control {
+  min-height: 2.75rem;
+  width: 100%;
+  border: 1px solid hsl(var(--input));
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+.footer-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer-list {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.image-reveal {
+  overflow: hidden;
+}
+
+.image-reveal img {
+  transition: transform 0.7s ease;
+}
+
+.image-reveal:hover img {
+  transform: scale(1.04);
+}
