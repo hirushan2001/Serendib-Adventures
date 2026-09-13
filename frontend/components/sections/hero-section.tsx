@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { SearchFilterBar } from "@/components/search-filter-bar";
 import { images } from "@/lib/adventure-data";
 
@@ -49,14 +50,12 @@ export function HeroSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroSlides.length);
-    }, 5500);
+    }, 7500);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % heroSlides.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-
   const activeSlide = heroSlides[current];
+  const fullTitleWords = `${activeSlide.titleLine1} ${activeSlide.titleLine2}`.split(" ");
 
   return (
     <section className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-slate-950 pt-28 pb-16 text-white">
@@ -73,7 +72,7 @@ export function HeroSection() {
             alt={slide.alt}
             width={1920}
             height={1200}
-            className={`h-full w-full object-cover transition-transform duration-[6000ms] ease-out ${
+            className={`h-full w-full object-cover transition-transform duration-[7500ms] ease-out ${
               index === current ? "scale-105" : "scale-100"
             }`}
           />
@@ -81,27 +80,81 @@ export function HeroSection() {
       ))}
       
       {/* Dark Scrim Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/30 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/30 z-0" />
+
+      {/* Ambient Border Accent Lines */}
+      <div className="absolute inset-y-0 left-0 h-full w-px bg-white/10 z-10 pointer-events-none">
+        <div className="absolute top-1/4 h-60 w-px bg-gradient-to-b from-transparent via-emerald-400 to-transparent" />
+      </div>
+      <div className="absolute inset-y-0 right-0 h-full w-px bg-white/10 z-10 pointer-events-none">
+        <div className="absolute top-1/3 h-60 w-px bg-gradient-to-b from-transparent via-emerald-400 to-transparent" />
+      </div>
 
       {/* Hero Content Shell */}
       <div className="page-shell relative z-10 flex flex-1 flex-col justify-between pt-8 pb-6">
-        {/* Top Header Text */}
-        <div className="max-w-3xl pt-8 sm:pt-14">
-          <span className="inline-block text-xs sm:text-sm font-extrabold uppercase tracking-widest text-emerald-400 mb-3 drop-shadow transition-all duration-500">
-            {activeSlide.tag}
-          </span>
-          <h1 className="font-display text-4xl font-black leading-[1.02] sm:text-6xl lg:text-7xl tracking-tight text-white drop-shadow-md">
-            {activeSlide.titleLine1}<br className="hidden sm:inline" /> {activeSlide.titleLine2}
-          </h1>
-          <p className="mt-4 max-w-xl text-base text-slate-200 sm:text-lg font-medium drop-shadow leading-relaxed">
-            {activeSlide.subtitle}
-          </p>
-        </div>
+        {/* Single Synchronized Outer AnimatePresence */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSlide.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
+            className="max-w-3xl pt-8 sm:pt-14"
+          >
+            {/* Tag Line */}
+            <motion.span
+              initial={{ opacity: 0, filter: "blur(4px)", y: 8 }}
+              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="inline-block text-xs sm:text-sm font-extrabold uppercase tracking-widest text-emerald-400 mb-3 drop-shadow"
+            >
+              {activeSlide.tag}
+            </motion.span>
 
-        {/* Embedded Floating White Search Bar */}
-        <div className="pt-10 pb-4">
+            {/* Word-by-Word Blur & Motion Title Heading */}
+            <h1 className="font-display text-4xl font-black leading-[1.08] sm:text-6xl lg:text-7xl tracking-tight text-white drop-shadow-md">
+              {fullTitleWords.map((word, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, filter: "blur(6px)", y: 12 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: 0.08 + index * 0.05,
+                    ease: "easeInOut",
+                  }}
+                  className="mr-3 inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
+
+            {/* Subtitle Paragraph */}
+            <motion.p
+              initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+              transition={{
+                duration: 0.35,
+                delay: 0.08 + fullTitleWords.length * 0.05 + 0.05,
+                ease: "easeInOut",
+              }}
+              className="mt-4 max-w-xl text-base text-slate-200 sm:text-lg font-medium drop-shadow leading-relaxed"
+            >
+              {activeSlide.subtitle}
+            </motion.p>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Embedded Floating Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="pt-10 pb-4"
+        >
           <SearchFilterBar />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

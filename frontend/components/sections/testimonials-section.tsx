@@ -192,6 +192,7 @@ export function TestimonialsSection({ reviews }: TestimonialsSectionProps) {
         {/* Navigation Arrows on Top Right */}
         <div className="flex items-center gap-3 shrink-0">
           <button
+            suppressHydrationWarning
             onClick={handlePrev}
             className="group size-11 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white hover:border-emerald-500 flex items-center justify-center transition-all duration-300 shadow-sm active:scale-90"
             aria-label="Previous testimonial"
@@ -199,6 +200,7 @@ export function TestimonialsSection({ reviews }: TestimonialsSectionProps) {
             <ChevronLeft className="size-5 transition-transform duration-200 group-hover:-translate-x-1" />
           </button>
           <button
+            suppressHydrationWarning
             onClick={handleNext}
             className="group size-11 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white hover:border-emerald-500 flex items-center justify-center transition-all duration-300 shadow-sm active:scale-90"
             aria-label="Next testimonial"

@@ -41,6 +41,7 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
         
         {/* Floating Left Arrow */}
         <button
+          suppressHydrationWarning
           onClick={() => handleScroll("left")}
           aria-label="Scroll left"
           className="absolute -left-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
@@ -104,6 +105,7 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
 
         {/* Floating Right Arrow */}
         <button
+          suppressHydrationWarning
           onClick={() => handleScroll("right")}
           aria-label="Scroll right"
           className="absolute -right-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
