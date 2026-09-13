@@ -105,7 +105,10 @@ export default function ContactPage() {
                     <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
                       Preferred Adventure
                     </label>
-                    <select className="w-full h-10 rounded-xl border border-border bg-background px-3 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-accent">
+                    <select
+                      suppressHydrationWarning
+                      className="w-full h-10 rounded-xl border border-border bg-background px-3 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-accent"
+                    >
                       <option>Not sure yet</option>
                       {adventures.map((a) => (
                         <option key={a.slug}>{a.title}</option>

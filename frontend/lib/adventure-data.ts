@@ -549,9 +549,11 @@ export const reviews: Review[] = [
     name: "Maya Thompson",
     country: "United Kingdom",
     initials: "MT",
-    trip: "White Water Rafting Expedition",
+    trip: "Kitulgala White Water Rafting Expedition",
     rating: 5,
-    comment: "The river rapids were exhilarating! Our guide was an absolute professional, making us feel completely safe while giving us the ride of our lives. The local buffet lunch afterwards was the best meal we had in Sri Lanka!",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
+    sourceBadge: "Viator Verified",
+    comment: "The river rapids were exhilarating! Our guide was an absolute professional, making us feel completely safe while giving us the ride of our lives. The traditional Sri Lankan buffet lunch afterwards by the riverbank was unforgettable!",
     date: "February 2026"
   },
   {
@@ -561,7 +563,9 @@ export const reviews: Review[] = [
     initials: "JM",
     trip: "Kataran-Oya Waterfall Abseiling",
     rating: 5,
-    comment: "Stepping over the edge of a 100ft waterfall was terrifying at first, but the equipment and dual belay line setup gave total confidence. Unforgettable highlight of our trip!",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+    sourceBadge: "TripAdvisor Verified",
+    comment: "Stepping over the edge of a 105ft roaring waterfall was terrifying at first, but the professional equipment and dual belay line setup gave total confidence. Absolute highlight of our holiday!",
     date: "January 2026"
   },
   {
@@ -569,9 +573,11 @@ export const reviews: Review[] = [
     name: "Anika Perera",
     country: "Australia",
     initials: "AP",
-    trip: "Sinharaja Rainforest Expedition",
+    trip: "Sinharaja Virgin Rainforest Trekking",
     rating: 5,
-    comment: "Thoughtful, intimate, and beautifully paced. Our naturalist tracker helped us spot the Blue Magpie and tree frogs that we never could have found on our own. 10/10!",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop",
+    sourceBadge: "Direct Guest",
+    comment: "Thoughtful, intimate, and beautifully paced. Our resident naturalist tracker helped us spot the rare Sri Lanka Blue Magpie and endemic tree frogs that we never could have seen on our own.",
     date: "January 2026"
   },
   {
@@ -579,9 +585,23 @@ export const reviews: Review[] = [
     name: "David & Sarah Miller",
     country: "Germany",
     initials: "DS",
-    trip: "Riverside Wilderness Camping",
+    trip: "Riverside Wilderness Glamping",
     rating: 5,
-    comment: "Glamping right next to the Kelani River with a campfire, BBQ, and nighttime wildlife walk. Waking up to rainforest morning mist was pure magic.",
+    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=800&auto=format&fit=crop",
+    sourceBadge: "Viator Verified",
+    comment: "Glamping right next to the Kelani River with a campfire, delicious BBQ dinner, and night wildlife walk. Waking up to rainforest morning mist with fresh king coconuts was pure magic.",
     date: "December 2025"
+  },
+  {
+    id: "rev-5",
+    name: "Elena Rostova",
+    country: "Switzerland",
+    initials: "ER",
+    trip: "Sigiriya & Pidurangala Sunrise Tour",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop",
+    sourceBadge: "TripAdvisor Verified",
+    comment: "Climbing Pidurangala for dawn light over Sigiriya Lion Rock was otherworldly. Serendib Adventures organized every detail seamlessly from transport to private guide. Truly top tier service!",
+    date: "November 2025"
   }
 ];

@@ -315,6 +315,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
                     <div>
                       <label className="text-xs font-semibold text-muted-foreground block mb-1">Guests</label>
                       <select
+                        suppressHydrationWarning
                         value={bookingData.guests}
                         onChange={(e) => setBookingData({ ...bookingData, guests: e.target.value })}
                         className="w-full h-10 rounded-xl border border-border bg-background px-3 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-accent"
