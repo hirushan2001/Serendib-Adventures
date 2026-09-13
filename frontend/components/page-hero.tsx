@@ -12,7 +12,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative flex min-h-[48vh] flex-col justify-end overflow-hidden bg-slate-900 pt-32 pb-14 text-white w-full">
+    <section className="relative flex min-h-[55vh] flex-col justify-end overflow-hidden bg-slate-900 pt-32 pb-16 text-white w-full">
       <img
         src={image}
         alt={title}
@@ -20,7 +20,7 @@ export function PageHero({
         height={1080}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/40" />
       <div className="page-shell relative z-10 max-w-3xl">
         <span className="block text-xs sm:text-sm font-extrabold uppercase tracking-widest text-emerald-400 mb-2 drop-shadow">
           {eyebrow}

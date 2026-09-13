@@ -22,14 +22,9 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
     <div className="relative w-full">
       {/* Top Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
-            Best Selling Packages
-          </h2>
-          <span className="rounded-lg bg-orange-100 px-3 py-1 text-xl sm:text-2xl font-black text-orange-950 dark:bg-emerald-500/20 dark:text-emerald-400">
-            Within Sri Lanka
-          </span>
-        </div>
+        <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
+          Popular <span className="rounded-md bg-emerald-200/90 px-2.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Within Sri Lanka</span> Packages
+        </h2>
 
         <div>
           <Link

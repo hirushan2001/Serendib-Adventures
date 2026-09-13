@@ -8,8 +8,8 @@ import { images } from "@/lib/adventure-data";
  */
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-[85vh] flex-col justify-between overflow-hidden bg-slate-900 pt-28 pb-12 text-white w-full">
-      {/* Background Hero Image */}
+    <section className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-slate-900 pt-28 pb-16 text-white">
+      {/* Background Hero Image - Fills Whole Viewport */}
       <img
         src={images.rafting}
         alt="Tropical Sri Lankan River Adventure"
@@ -18,13 +18,13 @@ export function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover"
       />
       
-      {/* Soft Dark Scrim Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/40" />
+      {/* Dark Scrim Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/30" />
 
       {/* Hero Content Shell */}
-      <div className="page-shell relative z-10 flex flex-1 flex-col justify-between pt-8 pb-4">
+      <div className="page-shell relative z-10 flex flex-1 flex-col justify-between pt-10 pb-6">
         {/* Top Hero Text */}
-        <div className="max-w-3xl pt-8 sm:pt-12">
+        <div className="max-w-3xl pt-8 sm:pt-14">
           <span className="inline-block text-xs sm:text-sm font-extrabold uppercase tracking-widest text-emerald-400 mb-3 drop-shadow">
             Make Your Hassle-Free Travel Plans Now!
           </span>

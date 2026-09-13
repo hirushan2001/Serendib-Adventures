@@ -12,7 +12,7 @@ export function TestimonialsSection({ reviews }: { reviews: Review[] }) {
             Stories From Our Adventurers
           </span>
           <h2 className="font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white">
-            Guest Journal
+            Guest <span className="rounded-md bg-emerald-200/90 px-2.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Journal</span>
           </h2>
         </div>
         <p className="max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">

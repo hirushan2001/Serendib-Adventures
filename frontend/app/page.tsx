@@ -16,7 +16,7 @@ export default function HomePage() {
     <div className="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen">
       <HeroSection />
       
-      <section className="page-shell py-10">
+      <section className="page-shell py-12 md:py-16">
         <PopularPackagesCarousel adventures={adventures} />
       </section>
 
