@@ -34,8 +34,8 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
   return (
     <>
       {/* Gallery & Header Hero */}
-      <section className="page-shell grid min-h-[72vh] gap-3 pt-28 md:grid-cols-[1.5fr_.5fr]">
-        <div className="relative min-h-[30rem] overflow-hidden rounded-2xl shadow-xl">
+      <section className="page-shell grid min-h-[68vh] gap-4 pt-24 pb-8 md:grid-cols-[1.5fr_.5fr]">
+        <div className="relative min-h-[30rem] overflow-hidden rounded-[2.5rem] bg-slate-900 shadow-2xl">
           <img
             src={a.image}
             alt={a.title}
@@ -43,23 +43,23 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
             height={1000}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-forest/95 via-forest/40 to-transparent p-8 pt-28 text-hero-foreground">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-8 sm:p-12 pt-28 text-white">
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-slate-950">
+              <span className="rounded-full bg-emerald-500 px-3.5 py-1 text-xs font-bold text-white shadow-md">
                 {a.category}
               </span>
-              <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur text-white">
+              <span className="rounded-full bg-black/40 border border-white/20 px-3.5 py-1 text-xs font-semibold backdrop-blur text-white">
                 {a.location}
               </span>
             </div>
-            <h1 className="font-display text-4xl font-extrabold sm:text-6xl text-white">
+            <h1 className="font-display text-3xl font-extrabold sm:text-5xl lg:text-6xl text-white tracking-tight drop-shadow-md">
               {a.title}
             </h1>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
-          <div className="overflow-hidden rounded-2xl shadow-md">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
+          <div className="overflow-hidden rounded-[2rem] shadow-md bg-slate-900">
             <img
               src={a.gallery?.[0] || images.canyoning}
               alt="Sri Lanka river & rainforest experience"
@@ -69,7 +69,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               className="h-full min-h-44 w-full object-cover transition duration-500 hover:scale-105"
             />
           </div>
-          <div className="overflow-hidden rounded-2xl shadow-md">
+          <div className="overflow-hidden rounded-[2rem] shadow-md bg-slate-900">
             <img
               src={a.gallery?.[1] || images.trekking}
               alt="Kitulgala adventure trail"
@@ -87,9 +87,9 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
         <div className="page-shell grid gap-12 lg:grid-cols-[1fr_24rem]">
           <div>
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-2 gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 rounded-[2rem] border border-border bg-card p-6 shadow-sm sm:grid-cols-4">
               <div className="flex items-center gap-3">
-                <MapPin className="size-5 text-amber-500" />
+                <MapPin className="size-5 text-emerald-600 dark:text-emerald-400" />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">Location</span>
                   <strong className="text-sm font-bold text-foreground">{a.location}</strong>
@@ -97,7 +97,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               </div>
 
               <div className="flex items-center gap-3">
-                <Clock3 className="size-5 text-amber-500" />
+                <Clock3 className="size-5 text-emerald-600 dark:text-emerald-400" />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">Duration</span>
                   <strong className="text-sm font-bold text-foreground">{a.duration}</strong>
@@ -105,7 +105,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               </div>
 
               <div className="flex items-center gap-3">
-                <ShieldCheck className="size-5 text-amber-500" />
+                <ShieldCheck className="size-5 text-emerald-600 dark:text-emerald-400" />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">Difficulty</span>
                   <strong className="text-sm font-bold text-foreground">{a.difficulty}</strong>
@@ -113,7 +113,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               </div>
 
               <div className="flex items-center gap-3">
-                <Users className="size-5 text-amber-500" />
+                <Users className="size-5 text-emerald-600 dark:text-emerald-400" />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">Group Size</span>
                   <strong className="text-sm font-bold text-foreground">{a.groupSize || "2 - 8 People"}</strong>
@@ -125,7 +125,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
             <h2 className="mt-12 font-display text-3xl font-extrabold text-foreground">
               Experience Overview
             </h2>
-            <p className="mt-4 text-base leading-8 text-muted-foreground">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               {a.overview || "Our signature experience balances high-energy adventure with time to appreciate the remarkable natural surroundings. Every trip begins with a full safety briefing and is led by certified, experienced local guides."}
             </p>
 
@@ -137,8 +137,8 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
                 </h2>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {a.highlights.map((item, idx) => (
-                    <div key={idx} className="flex gap-3 rounded-xl border border-border/70 bg-card p-4 shadow-sm">
-                      <CheckCircle2 className="size-5 shrink-0 text-amber-500" />
+                    <div key={idx} className="flex gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-sm">
+                      <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
                       <span className="text-sm font-medium text-foreground">{item}</span>
                     </div>
                   ))}
@@ -152,19 +152,19 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
                 <h2 className="mt-12 font-display text-2xl font-bold text-foreground">
                   Itinerary Timeline
                 </h2>
-                <ol className="relative mt-6 border-l-2 border-amber-500/40 pl-6 space-y-8">
+                <ol className="relative mt-6 border-l-2 border-emerald-500/40 pl-6 space-y-8">
                   {a.itinerary.map((step, idx) => (
                     <li key={idx} className="relative">
-                      <span className="absolute -left-[2rem] top-0 grid size-8 place-items-center rounded-full bg-amber-500 text-xs font-bold text-slate-950 shadow-md">
+                      <span className="absolute -left-[2rem] top-0 grid size-8 place-items-center rounded-full bg-emerald-500 text-xs font-bold text-white shadow-md">
                         {idx + 1}
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-md bg-amber-500/10 px-2 py-0.5 text-xs font-bold text-amber-500">
+                        <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                           {step.time}
                         </span>
                         <h3 className="font-display text-lg font-bold text-foreground">{step.title}</h3>
                       </div>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{step.desc}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
                     </li>
                   ))}
                 </ol>
@@ -174,14 +174,14 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
             {/* Included & What to Bring */}
             <div className="mt-12 grid gap-8 md:grid-cols-2">
               {a.included && (
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+                <div className="rounded-[2rem] border border-border bg-card p-6 shadow-sm">
                   <h3 className="flex items-center gap-2 font-display text-xl font-bold text-foreground">
-                    <Sparkles className="size-5 text-amber-500" /> What's Included
+                    <Sparkles className="size-5 text-emerald-600 dark:text-emerald-400" /> What's Included
                   </h3>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                     {a.included.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <Check className="size-4 shrink-0 text-amber-500 mt-1" />
+                        <Check className="size-4 shrink-0 text-emerald-500 mt-1" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -190,14 +190,14 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               )}
 
               {a.toBring && (
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+                <div className="rounded-[2rem] border border-border bg-card p-6 shadow-sm">
                   <h3 className="flex items-center gap-2 font-display text-xl font-bold text-foreground">
-                    <AlertCircle className="size-5 text-amber-500" /> What to Bring
+                    <AlertCircle className="size-5 text-emerald-600 dark:text-emerald-400" /> What to Bring
                   </h3>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                     {a.toBring.map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <ChevronRight className="size-4 shrink-0 text-amber-500 mt-1" />
+                        <ChevronRight className="size-4 shrink-0 text-emerald-500 mt-1" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -209,8 +209,8 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
             {/* Reviews */}
             <div className="mt-12">
               <h2 className="font-display text-2xl font-bold text-foreground">Guest Reviews</h2>
-              <div className="mt-4 rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <div className="flex items-center gap-2 text-amber-500">
+              <div className="mt-4 rounded-[2rem] border border-border bg-card p-6 shadow-sm">
+                <div className="flex items-center gap-2 text-amber-400">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="size-4 fill-current" />
                   ))}
@@ -227,7 +227,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
 
           {/* Sticky Booking Inquiry Card */}
           <aside>
-            <div className="sticky top-28 rounded-2xl border border-border bg-card p-6 shadow-xl">
+            <div className="sticky top-28 rounded-[2rem] border border-border bg-card p-6 shadow-sm">
               <div className="flex items-baseline justify-between">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
@@ -239,7 +239,7 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
                   </div>
                 </div>
                 {a.oldPrice && (
-                  <span className="rounded-full bg-amber-500/20 px-2.5 py-1 text-xs font-bold text-amber-500">
+                  <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                     Save ${a.oldPrice - a.price}
                   </span>
                 )}
@@ -248,16 +248,16 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
               <div className="my-6 border-t border-border" />
 
               {bookingSuccess ? (
-                <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-6 text-center">
-                  <CheckCircle2 className="mx-auto size-10 text-amber-500" />
+                <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-6 text-center">
+                  <CheckCircle2 className="mx-auto size-10 text-emerald-500" />
                   <h3 className="mt-3 font-display text-lg font-bold text-foreground">Inquiry Received!</h3>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                     Thank you, {bookingData.fullName}. Our Kitulgala team will contact you at {bookingData.email} within 2 hours to confirm availability and itinerary details.
                   </p>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="mt-4 rounded-xl text-xs font-bold"
+                    className="mt-4 rounded-full text-xs font-bold"
                     onClick={() => setBookingSuccess(false)}
                   >
                     Send Another Request
@@ -326,12 +326,12 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">
+                  <Button type="submit" size="lg" className="w-full rounded-full font-bold bg-emerald-500 text-white hover:bg-emerald-600">
                     Check Availability <ChevronRight className="ml-1 size-4" />
                   </Button>
 
                   <p className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground text-center">
-                    <ShieldCheck className="size-3.5 text-amber-500" /> Zero booking fees · Pay at location
+                    <ShieldCheck className="size-3.5 text-emerald-500" /> Zero booking fees · Pay at location
                   </p>
                 </form>
               )}
@@ -341,13 +341,13 @@ export default function AdventureDetailPage({ params }: { params: Promise<{ slug
       </section>
 
       {/* Bottom CTA Banner */}
-      <section className="bg-forest py-14 text-hero-foreground">
+      <section className="bg-slate-950 py-14 text-white">
         <div className="page-shell flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <div>
-            <p className="eyebrow text-amber-500 font-bold uppercase tracking-widest">Keep Exploring</p>
-            <h2 className="mt-1 font-display text-3xl font-bold text-white">Find Another Wild Sri Lankan Experience</h2>
+            <span className="block text-xs font-extrabold uppercase tracking-widest text-emerald-400 mb-1">Keep Exploring</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">Find Another Wild Sri Lankan Experience</h2>
           </div>
-          <Button asChild className="rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">
+          <Button asChild className="rounded-full font-bold bg-emerald-500 text-white hover:bg-emerald-600 px-6">
             <Link href="/adventures">
               All Adventure Packages <ChevronRight className="ml-1 size-4" />
             </Link>

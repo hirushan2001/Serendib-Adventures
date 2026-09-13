@@ -108,10 +108,10 @@ function AdventuresContent() {
 
           <div className="grid gap-10 pt-8 lg:grid-cols-[16rem_1fr]">
             {/* Sidebar Filters */}
-            <aside className={`${showMobileFilters ? "block" : "hidden"} lg:block space-y-8 rounded-2xl border border-border bg-card p-6 shadow-sm`}>
+            <aside className={`${showMobileFilters ? "block" : "hidden"} lg:block space-y-8 rounded-[2rem] border border-border bg-card p-6 shadow-sm`}>
               {/* Category Filter */}
               <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-500">
+                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   <Compass className="size-4" /> Category
                 </h3>
                 <div className="mt-3 flex flex-col gap-1">
@@ -128,8 +128,8 @@ function AdventuresContent() {
                       key={cat.id}
                       variant={selectedCategory === cat.id ? "default" : "ghost"}
                       size="sm"
-                      className={`justify-start rounded-lg font-medium text-xs text-left ${
-                        selectedCategory === cat.id ? "bg-amber-500 text-slate-950 hover:bg-amber-400" : ""
+                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
+                        selectedCategory === cat.id ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
                       }`}
                       onClick={() => setSelectedCategory(cat.id)}
                     >
@@ -141,7 +141,7 @@ function AdventuresContent() {
 
               {/* Destination Filter */}
               <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-500">
+                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   <MapPin className="size-4" /> Location
                 </h3>
                 <div className="mt-3 flex flex-col gap-1">
@@ -158,8 +158,8 @@ function AdventuresContent() {
                       key={loc.id}
                       variant={selectedDestination === loc.id ? "default" : "ghost"}
                       size="sm"
-                      className={`justify-start rounded-lg font-medium text-xs text-left ${
-                        selectedDestination === loc.id ? "bg-amber-500 text-slate-950 hover:bg-amber-400" : ""
+                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
+                        selectedDestination === loc.id ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
                       }`}
                       onClick={() => setSelectedDestination(loc.id)}
                     >
@@ -171,7 +171,7 @@ function AdventuresContent() {
 
               {/* Difficulty Filter */}
               <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-500">
+                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   <Shield className="size-4" /> Difficulty Level
                 </h3>
                 <div className="mt-3 flex flex-col gap-1">
@@ -180,8 +180,8 @@ function AdventuresContent() {
                       key={diff}
                       variant={selectedDifficulty === diff ? "default" : "ghost"}
                       size="sm"
-                      className={`justify-start rounded-lg font-medium text-xs text-left ${
-                        selectedDifficulty === diff ? "bg-amber-500 text-slate-950 hover:bg-amber-400" : ""
+                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
+                        selectedDifficulty === diff ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
                       }`}
                       onClick={() => setSelectedDifficulty(diff)}
                     >
@@ -224,14 +224,14 @@ function AdventuresContent() {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-2xl border border-dashed border-border p-12 text-center bg-card">
+                <div className="rounded-[2rem] border border-dashed border-border p-12 text-center bg-card">
                   <h2 className="font-display text-2xl font-bold text-foreground">No adventures match your criteria</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Try adjusting your filters, location, or search keyword.
                   </p>
                   <Button
                     variant="default"
-                    className="mt-6 rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400"
+                    className="mt-6 rounded-full font-bold bg-emerald-500 text-white hover:bg-emerald-600"
                     onClick={() => {
                       setSelectedCategory("all");
                       setSelectedDestination("all");

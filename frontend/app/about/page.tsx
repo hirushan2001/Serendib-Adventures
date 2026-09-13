@@ -16,14 +16,14 @@ export default function AboutPage() {
       <section className="section-pad bg-background">
         <div className="page-shell grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="eyebrow text-amber-500 font-bold">Since 2014</p>
-            <h2 className="mt-4 font-display text-4xl font-extrabold sm:text-5xl text-slate-100">
+            <span className="block text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">Since 2014</span>
+            <h2 className="font-display text-3xl font-extrabold sm:text-5xl text-slate-900 dark:text-white">
               Adventure feels different when it’s personal.
             </h2>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
               Serendib began with a few rafts, a close-knit group of Kitulgala guides and a simple ambition: show guests the places we love, in the way they deserve to be seen.
             </p>
-            <p className="mt-4 leading-7 text-muted-foreground">
+            <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-400">
               Today, we still keep groups small, work with local communities and build every journey around respect—for people, place and the power of nature.
             </p>
           </div>
@@ -33,7 +33,7 @@ export default function AboutPage() {
             width={1200}
             height={1408}
             loading="lazy"
-            className="h-[34rem] w-full rounded-2xl object-cover shadow-2xl"
+            className="h-[32rem] w-full rounded-[2rem] object-cover shadow-xl"
           />
         </div>
       </section>
@@ -48,10 +48,10 @@ export default function AboutPage() {
             ].map(([Icon, t, d]) => {
               const I = Icon as typeof Heart;
               return (
-                <article key={t as string} className="border-t-2 border-amber-500 pt-6">
-                  <I className="size-7 text-amber-500" />
+                <article key={t as string} className="border-t-2 border-emerald-500 pt-6">
+                  <I className="size-7 text-emerald-600 dark:text-emerald-400" />
                   <h2 className="mt-5 font-display text-2xl font-bold text-foreground">{t as string}</h2>
-                  <p className="mt-3 leading-7 text-muted-foreground">{d as string}</p>
+                  <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">{d as string}</p>
                 </article>
               );
             })}
@@ -60,22 +60,22 @@ export default function AboutPage() {
       </section>
 
       <section className="section-pad bg-background">
-        <div className="page-shell grid gap-4 md:grid-cols-2">
+        <div className="page-shell grid gap-6 md:grid-cols-2">
           <img
             src={images.canyoning}
             alt="Canyoning in Sri Lankan rainforest"
             loading="lazy"
             width={1200}
             height={1504}
-            className="h-[36rem] w-full rounded-2xl object-cover"
+            className="h-[34rem] w-full rounded-[2rem] object-cover"
           />
-          <div className="flex flex-col justify-center rounded-2xl bg-forest p-8 text-hero-foreground md:p-14">
-            <p className="eyebrow text-amber-500 font-bold">Our promise</p>
-            <h2 className="mt-4 font-display text-4xl font-extrabold text-white">Wild, never reckless.</h2>
-            <p className="mt-5 leading-7 text-hero-muted">
+          <div className="flex flex-col justify-center rounded-[2rem] bg-slate-900 p-8 text-white md:p-14 shadow-xl">
+            <span className="block text-xs font-extrabold uppercase tracking-widest text-emerald-400 mb-2">Our promise</span>
+            <h2 className="font-display text-3xl font-extrabold text-white sm:text-4xl">Wild, never reckless.</h2>
+            <p className="mt-5 leading-relaxed text-slate-200">
               Every guide is trained in rescue and first aid. Equipment is checked before every departure, routes are continuously assessed, and conditions—not schedules—make the final call.
             </p>
-            <Button asChild className="mt-7 w-fit rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">
+            <Button asChild className="mt-8 w-fit rounded-full font-bold bg-emerald-500 text-white hover:bg-emerald-600 px-8">
               <Link href="/contact">Meet our team</Link>
             </Button>
           </div>

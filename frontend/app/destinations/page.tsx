@@ -16,12 +16,12 @@ export default function DestinationsPage() {
           {destinations.map((d, i) => (
             <article
               key={d.id}
-              className={`grid gap-8 overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-lg lg:grid-cols-2 lg:items-center ${
+              className={`grid gap-8 overflow-hidden rounded-[2rem] border border-border bg-card p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 lg:grid-cols-2 lg:items-center ${
                 i % 2 === 1 ? "lg:grid-flow-dense" : ""
               }`}
             >
               {/* Image Column */}
-              <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl ${i % 2 === 1 ? "lg:col-start-2" : ""}`}>
+              <div className={`relative aspect-[4/3] overflow-hidden rounded-[1.5rem] ${i % 2 === 1 ? "lg:col-start-2" : ""}`}>
                 <img
                   src={d.image}
                   alt={`${d.name}, Sri Lanka`}
@@ -30,29 +30,29 @@ export default function DestinationsPage() {
                   loading="lazy"
                   className="h-full w-full object-cover transition duration-700 hover:scale-105"
                 />
-                <span className="absolute left-4 top-4 rounded-full bg-forest/90 px-3.5 py-1 text-xs font-bold text-white backdrop-blur">
+                <span className="absolute left-4 top-4 rounded-full bg-black/60 backdrop-blur-md border border-white/20 px-3.5 py-1 text-xs font-bold text-white">
                   {d.district} District
                 </span>
-                <span className="absolute right-4 top-4 rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-slate-950 shadow-md">
+                <span className="absolute right-4 top-4 rounded-full bg-emerald-500 px-3.5 py-1 text-xs font-bold text-white shadow-md">
                   {d.toursCount}
                 </span>
               </div>
 
               {/* Details Column */}
               <div className="space-y-5 p-2 md:p-6">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-500">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   <MapPin className="size-4" /> {d.region}
                 </div>
 
-                <h2 className="font-display text-4xl font-extrabold text-foreground">{d.name}</h2>
+                <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground">{d.name}</h2>
 
-                <p className="text-base leading-7 text-muted-foreground">
+                <p className="text-base leading-relaxed text-muted-foreground">
                   {d.overview || d.description}
                 </p>
 
                 {d.bestTimeToVisit && (
                   <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground border-y border-border/60 py-3">
-                    <Calendar className="size-4 text-amber-500" />
+                    <Calendar className="size-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Best Season to Visit: <strong className="text-foreground">{d.bestTimeToVisit}</strong></span>
                   </div>
                 )}
@@ -65,7 +65,7 @@ export default function DestinationsPage() {
                     <div className="grid gap-2 sm:grid-cols-2">
                       {d.highlights.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-2 text-xs font-medium text-foreground">
-                          <CheckCircle2 className="size-4 shrink-0 text-amber-500" />
+                          <CheckCircle2 className="size-4 shrink-0 text-emerald-500" />
                           <span>{item}</span>
                         </div>
                       ))}
@@ -74,7 +74,7 @@ export default function DestinationsPage() {
                 )}
 
                 <div className="pt-4">
-                  <Button asChild size="lg" className="rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">
+                  <Button asChild size="lg" className="rounded-full font-bold bg-slate-950 text-white hover:bg-slate-800 dark:bg-emerald-500 dark:hover:bg-emerald-600">
                     <Link href={`/adventures?destination=${d.id}`}>
                       Explore {d.name} Tours <ArrowUpRight className="ml-1 size-4" />
                     </Link>

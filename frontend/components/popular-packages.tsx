@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, MapPin, Star, ChevronRight as ArrowRightIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronRight as ArrowRightIcon } from "lucide-react";
 import { Tour } from "@/lib/types";
 
 export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) {
@@ -10,7 +10,7 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
 
   const handleScroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.clientWidth * 0.75;
+      const scrollAmount = scrollRef.current.clientWidth;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth"
@@ -18,16 +18,17 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
     }
   };
 
-  const packageCounts = ["100+ Packages", "150+ Packages", "90+ Packages", "120+ Packages", "80+ Packages", "110+ Packages"];
-
   return (
-    <div className="w-full">
+    <div className="relative w-full">
       {/* Top Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
+        <div className="flex items-center flex-wrap gap-2">
           <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
-            Popular International Packages
+            Best Selling Packages
           </h2>
+          <span className="rounded-lg bg-orange-100 px-3 py-1 text-xl sm:text-2xl font-black text-orange-950 dark:bg-emerald-500/20 dark:text-emerald-400">
+            Within Sri Lanka
+          </span>
         </div>
 
         <div>
@@ -40,63 +41,81 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
         </div>
       </div>
 
-      {/* Cards Track */}
-      <div
-        ref={scrollRef}
-        className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 pt-1"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {adventures.map((item, idx) => (
-          <Link
-            key={item.id}
-            href={`/adventures/${item.slug}`}
-            className="group relative flex aspect-[3/4] w-[16.5rem] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-3xl bg-slate-900 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl sm:w-[18.5rem]"
+      {/* Cards Container with Side Floating Arrows & Clipped Overflow */}
+      <div className="relative group px-1">
+        
+        {/* Floating Left Arrow */}
+        <button
+          onClick={() => handleScroll("left")}
+          aria-label="Scroll left"
+          className="absolute -left-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
+        >
+          <ChevronLeft className="size-6" />
+        </button>
+
+        {/* Outer Clipped Overflow Window */}
+        <div className="overflow-hidden rounded-3xl">
+          {/* Cards Scroll Track */}
+          <div
+            ref={scrollRef}
+            className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 pt-1"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {/* Background Image */}
-            <img
-              src={item.image}
-              alt={item.title}
-              loading="lazy"
-              width={600}
-              height={800}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            {adventures.map((item) => {
+              const shortName = item.location.split(",")[0].trim();
+              const provinceName = item.location.split(",")[1]?.trim() || "Sri Lanka";
 
-            {/* Gradient Scrim Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+              return (
+                <Link
+                  key={item.id}
+                  href={`/adventures/${item.slug}`}
+                  className="group/card relative flex aspect-[3/4] w-[80vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-3xl bg-slate-900 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2.5rem)/3)] lg:w-[calc((100%-3.75rem)/4)]"
+                >
+                  {/* Background Image */}
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    width={600}
+                    height={800}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-105"
+                  />
 
-            {/* Top Left Count Badge (Matching Reference) */}
-            <div className="relative z-10 p-4">
-              <span className="inline-block rounded-full bg-black/40 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
-                {packageCounts[idx % packageCounts.length]}
-              </span>
-            </div>
+                  {/* Soft Gradient Scrim Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-slate-950/20" />
 
-            {/* Bottom Card Info Overlay */}
-            <div className="relative z-10 p-5 text-white">
-              <h3 className="font-display text-xl font-bold leading-snug text-white transition group-hover:text-emerald-400 line-clamp-1">
-                {item.title}
-              </h3>
+                  {/* Top Left Province/District Tag */}
+                  <div className="relative z-10 p-5">
+                    <span className="text-xs font-semibold text-slate-200/90 drop-shadow-md">
+                      {provinceName}
+                    </span>
+                  </div>
 
-              <div className="mt-1 flex items-center justify-between gap-2 text-xs text-slate-200">
-                <span className="font-medium text-slate-300 line-clamp-1">{item.category}</span>
-                <div className="flex items-center gap-1 font-bold text-amber-400 shrink-0">
-                  <Star className="size-3.5 fill-current text-amber-400" />
-                  <span>{item.rating}</span>
-                </div>
-              </div>
+                  {/* Bottom Card Title & Price Overlay */}
+                  <div className="relative z-10 p-6 text-white">
+                    <h3 className="font-display text-2xl sm:text-3xl font-black leading-none tracking-tight text-white drop-shadow-md">
+                      {shortName}
+                    </h3>
 
-              {/* Red Pin Location Tag */}
-              <div className="mt-2.5 flex items-center justify-between border-t border-white/10 pt-2.5 text-xs text-slate-300">
-                <div className="flex items-center gap-1.5 font-medium">
-                  <MapPin className="size-3.5 fill-red-500 text-red-500 shrink-0" />
-                  <span className="line-clamp-1">{item.location}</span>
-                </div>
-                <span className="font-extrabold text-white text-sm">${item.price}</span>
-              </div>
-            </div>
-          </Link>
-        ))}
+                    <p className="mt-2 text-base sm:text-lg font-extrabold text-slate-100 drop-shadow">
+                      ${item.price} <span className="text-xs font-normal text-slate-300">Onwards</span>
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Floating Right Arrow */}
+        <button
+          onClick={() => handleScroll("right")}
+          aria-label="Scroll right"
+          className="absolute -right-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
+        >
+          <ChevronRight className="size-6" />
+        </button>
+
       </div>
     </div>
   );

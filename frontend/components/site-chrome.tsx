@@ -121,6 +121,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="bg-slate-950 text-white">
+    {/* <footer className="bg-slate-950 text-white rounded-t-[2.5rem] md:rounded-t-[3.5rem] mt-8 overflow-hidden"> */}
       <div className="page-shell grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
           <Brand light />
