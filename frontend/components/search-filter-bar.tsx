@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, MapPin, Compass, Shield, ArrowRight } from "lucide-react";
+import { Search, MapPin, Calendar, Clock, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -9,26 +9,23 @@ interface SearchFilterBarProps {
   className?: string;
   onFilterChange?: (filters: { destination: string; category: string; difficulty: string; keyword: string }) => void;
   initialFilters?: { destination?: string; category?: string; difficulty?: string; keyword?: string };
-  isCompact?: boolean;
 }
 
 export function SearchFilterBar({ className = "", onFilterChange, initialFilters }: SearchFilterBarProps) {
   const router = useRouter();
   const [destination, setDestination] = useState(initialFilters?.destination || "all");
   const [category, setCategory] = useState(initialFilters?.category || "all");
-  const [difficulty, setDifficulty] = useState(initialFilters?.difficulty || "all");
-  const [keyword, setKeyword] = useState(initialFilters?.keyword || "");
+  const [date, setDate] = useState("");
+  const [guests, setGuests] = useState("2");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (onFilterChange) {
-      onFilterChange({ destination, category, difficulty, keyword });
+      onFilterChange({ destination, category, difficulty: "all", keyword: "" });
     } else {
       const query = new URLSearchParams();
       if (destination !== "all") query.set("destination", destination);
       if (category !== "all") query.set("category", category);
-      if (difficulty !== "all") query.set("difficulty", difficulty);
-      if (keyword) query.set("keyword", keyword);
       router.push(`/adventures?${query.toString()}`);
     }
   };
@@ -36,77 +33,107 @@ export function SearchFilterBar({ className = "", onFilterChange, initialFilters
   return (
     <form
       onSubmit={handleSearch}
-      className={`rounded-2xl border border-white/10 bg-forest/90 p-4 backdrop-blur-md shadow-2xl transition-all md:p-6 ${className}`}
+      className={`w-full rounded-2xl sm:rounded-full bg-white p-2.5 shadow-2xl border border-slate-100 text-slate-900 transition-all ${className}`}
     >
-      <div className="grid gap-4 md:grid-cols-4 md:items-end">
-        {/* Destination */}
-        <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-hero-accent">
-            <MapPin className="size-3.5" /> Destination
-          </label>
-          <select
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-white/10 px-3.5 py-2.5 text-sm font-medium text-white transition focus:border-hero-accent focus:outline-none focus:ring-1 focus:ring-hero-accent"
-          >
-            <option value="all" className="bg-forest text-white">All Locations</option>
-            <option value="kitulgala" className="bg-forest text-white">Kitulgala (River & Jungle)</option>
-            <option value="sigiriya" className="bg-forest text-white">Sigiriya (Rock Citadel)</option>
-            <option value="ella" className="bg-forest text-white">Ella (Highland Peaks)</option>
-            <option value="sinharaja" className="bg-forest text-white">Sinharaja (UNESCO Rainforest)</option>
-            <option value="yala" className="bg-forest text-white">Yala (Wild Leopard Park)</option>
-            <option value="galle" className="bg-forest text-white">Galle (South Coast Ramparts)</option>
-          </select>
+      <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        
+        {/* 1. Destination Segment */}
+        <div className="flex items-center gap-3 px-4 py-2.5 lg:border-r lg:border-slate-200">
+          <MapPin className="size-5 text-emerald-600 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Where to go?
+            </label>
+            <select
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              suppressHydrationWarning
+              className="w-full bg-transparent font-bold text-sm text-slate-800 focus:outline-none cursor-pointer truncate"
+            >
+              <option value="all">Type Destination</option>
+              <option value="kitulgala">Kitulgala (River Rapids)</option>
+              <option value="sigiriya">Sigiriya (Lion Rock)</option>
+              <option value="ella">Ella (Highland Peaks)</option>
+              <option value="sinharaja">Sinharaja (Rainforest)</option>
+              <option value="yala">Yala (Leopard Safari)</option>
+              <option value="galle">Galle (Dutch Fort)</option>
+            </select>
+          </div>
         </div>
 
-        {/* Activity Category */}
-        <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-hero-accent">
-            <Compass className="size-3.5" /> Activity Type
-          </label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-white/10 px-3.5 py-2.5 text-sm font-medium text-white transition focus:border-hero-accent focus:outline-none focus:ring-1 focus:ring-hero-accent"
-          >
-            <option value="all" className="bg-forest text-white">All Categories</option>
-            <option value="white-water-rafting" className="bg-forest text-white">White Water Rafting</option>
-            <option value="canyoning" className="bg-forest text-white">Jungle Canyoning</option>
-            <option value="waterfall-abseiling" className="bg-forest text-white">Waterfall Abseiling</option>
-            <option value="jungle-trekking" className="bg-forest text-white">Rainforest Trekking</option>
-            <option value="camping-nature" className="bg-forest text-white">Camping & Glamping</option>
-            <option value="cultural-safari" className="bg-forest text-white">Safari & Heritage</option>
-          </select>
+        {/* 2. Departure Date Segment */}
+        <div className="flex items-center gap-3 px-4 py-2.5 lg:border-r lg:border-slate-200">
+          <Calendar className="size-5 text-emerald-600 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Departure Date
+            </label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              suppressHydrationWarning
+              className="w-full bg-transparent font-bold text-sm text-slate-800 focus:outline-none cursor-pointer"
+            />
+          </div>
         </div>
 
-        {/* Difficulty */}
-        <div className="flex flex-col gap-1.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-hero-accent">
-            <Shield className="size-3.5" /> Difficulty
-          </label>
-          <select
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-white/10 px-3.5 py-2.5 text-sm font-medium text-white transition focus:border-hero-accent focus:outline-none focus:ring-1 focus:ring-hero-accent"
-          >
-            <option value="all" className="bg-forest text-white">All Levels</option>
-            <option value="Easy" className="bg-forest text-white">Easy (Family Friendly)</option>
-            <option value="Moderate" className="bg-forest text-white">Moderate (Active)</option>
-            <option value="Active" className="bg-forest text-white">Active (High Energy)</option>
-            <option value="Challenging" className="bg-forest text-white">Challenging (Thrill Seekers)</option>
-          </select>
+        {/* 3. Duration / Category Segment */}
+        <div className="flex items-center gap-3 px-4 py-2.5 lg:border-r lg:border-slate-200">
+          <Clock className="size-5 text-emerald-600 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Activity Type
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              suppressHydrationWarning
+              className="w-full bg-transparent font-bold text-sm text-slate-800 focus:outline-none cursor-pointer truncate"
+            >
+              <option value="all">Select Duration/Type</option>
+              <option value="white-water-rafting">White Water Rafting</option>
+              <option value="canyoning">Jungle Canyoning</option>
+              <option value="waterfall-abseiling">Waterfall Abseiling</option>
+              <option value="jungle-trekking">Rainforest Trekking</option>
+              <option value="camping-nature">Camping & Glamping</option>
+              <option value="cultural-safari">Safari & Heritage</option>
+            </select>
+          </div>
         </div>
 
-        {/* Search Submit Button */}
-        <div className="flex items-end">
+        {/* 4. Guests Segment */}
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          <Users className="size-5 text-emerald-600 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Guests
+            </label>
+            <select
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              suppressHydrationWarning
+              className="w-full bg-transparent font-bold text-sm text-slate-800 focus:outline-none cursor-pointer"
+            >
+              <option value="1">1 Person</option>
+              <option value="2">2 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="6">6+ Group</option>
+            </select>
+          </div>
+        </div>
+
+        {/* 5. Action Button */}
+        <div className="p-1">
           <Button
             type="submit"
             size="lg"
-            className="w-full rounded-xl bg-amber-500 px-6 text-sm font-bold text-slate-950 shadow-lg hover:bg-amber-400"
+            className="w-full h-12 rounded-xl sm:rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm shadow-md shadow-emerald-500/25 transition-all hover:scale-[1.02]"
           >
-            <Search className="mr-2 size-4" /> Find Adventures <ArrowRight className="ml-1 size-4" />
+            Explore Now
           </Button>
         </div>
+
       </div>
     </form>
   );

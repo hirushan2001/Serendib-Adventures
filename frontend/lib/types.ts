@@ -1,3 +1,6 @@
+/**
+ * Represents a Tour / Adventure Package in Serendib Adventures
+ */
 export interface Tour {
   id: string;
   slug: string;
@@ -22,8 +25,18 @@ export interface Tour {
   toBring?: string[];
   itinerary?: { time: string; title: string; desc: string }[];
   gallery?: string[];
+  viatorUrl?: string;
+  tripAdvisorUrl?: string;
+  viatorProductCode?: string;
+  tripAdvisorRef?: string;
+  freeCancellation?: boolean;
+  instantConfirmation?: boolean;
+  comboActivities?: string[];
 }
 
+/**
+ * Represents a Sri Lankan Destination (e.g. Kitulgala, Sigiriya, Ella, Yala)
+ */
 export interface Destination {
   id: string;
   name: string;
@@ -39,6 +52,9 @@ export interface Destination {
   size?: string;
 }
 
+/**
+ * Represents an Activity Category (e.g. White Water Rafting, Jungle Canyoning)
+ */
 export interface Category {
   id: string;
   title: string;
@@ -50,6 +66,9 @@ export interface Category {
   className?: string;
 }
 
+/**
+ * Represents a Guest Review or Verified Journal Entry
+ */
 export interface Review {
   id: string;
   name: string;
@@ -60,8 +79,12 @@ export interface Review {
   trip: string;
   comment: string;
   date: string;
+  sourceBadge?: "TripAdvisor Verified" | "Viator Verified" | "Direct Guest";
 }
 
+/**
+ * Represents a Booking Inquiry Form Payload
+ */
 export interface BookingInquiry {
   fullName: string;
   email: string;
