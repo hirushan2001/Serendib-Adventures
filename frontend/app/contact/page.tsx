@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, Instagram, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Check, Facebook, Instagram, Mail, MapPin, Phone, Send, Youtube } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { adventures, images } from "@/lib/adventure-data";
+import { siteConfig } from "@/lib/site-config";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -30,21 +31,30 @@ export default function ContactPage() {
               Close to the river.<br />
               Easy to reach.
             </h2>
-            <div className="mt-8 grid gap-5 text-sm">
+            <div className="mt-8 grid gap-4 text-sm">
               {[
-                [MapPin, "Kitulgala, Sabaragamuwa, Sri Lanka"],
-                [Phone, "+94 77 123 4567"],
-                [Mail, "info@serendibadventures.com"],
-                [Instagram, "@serendibadventures"],
-              ].map(([Icon, text]) => {
-                const I = Icon as typeof MapPin;
-                return (
-                  <div className="flex items-center gap-3" key={text as string}>
-                    <span className="grid size-10 place-items-center rounded-xl bg-card border border-border">
-                      <I className="size-4 text-emerald-600 dark:text-emerald-400" />
+                { icon: MapPin, text: siteConfig.contact.address, href: null },
+                { icon: Phone, text: siteConfig.contact.phone, href: `tel:${siteConfig.contact.phone.replace(/\s+/g, "")}` },
+                { icon: Mail, text: siteConfig.contact.email, href: `mailto:${siteConfig.contact.email}` },
+                { icon: Instagram, text: `${siteConfig.social.instagram.handle} (Instagram)`, href: siteConfig.social.instagram.url },
+                { icon: Facebook, text: `${siteConfig.social.facebook.handle} (Facebook)`, href: siteConfig.social.facebook.url },
+                { icon: Youtube, text: `${siteConfig.social.youtube.handle} (YouTube)`, href: siteConfig.social.youtube.url },
+              ].map(({ icon: Icon, text, href }) => {
+                const content = (
+                  <div className="flex items-center gap-3 group transition">
+                    <span className="grid size-10 place-items-center rounded-xl bg-card border border-border group-hover:border-emerald-500 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-950/30 transition">
+                      <Icon className="size-4 text-emerald-600 dark:text-emerald-400" />
                     </span>
-                    <span className="text-foreground font-medium">{text as string}</span>
+                    <span className="text-foreground font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">{text}</span>
                   </div>
+                );
+
+                return href ? (
+                  <a key={text} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                    {content}
+                  </a>
+                ) : (
+                  <div key={text}>{content}</div>
                 );
               })}
             </div>

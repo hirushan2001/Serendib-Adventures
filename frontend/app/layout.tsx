@@ -5,6 +5,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Serendib Adventures | Wild Sri Lanka Experiences & Day Tours",
   description: "Discover premium white water rafting, canyoning, trekking, and safari day tours in Kitulgala and across Sri Lanka.",
+  icons: {
+    icon: "/assets/logo.png",
+    shortcut: "/assets/logo.png",
+    apple: "/assets/logo.png",
+  },
 };
 
 export default function RootLayout({

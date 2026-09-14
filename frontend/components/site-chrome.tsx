@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Instagram, Facebook, Youtube, Menu, Mountain, X, Phone, Mail, MapPin, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site-config";
 
 const links = [
   ["Home", "/"],
@@ -17,12 +18,11 @@ const links = [
 export function Brand({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2.5" aria-label="Serendib Adventures home">
-      <span className="grid size-9 place-items-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/20 font-black">
-        S
-      </span>
-      <span className={`font-display text-xl font-black tracking-tight ${light ? "text-white" : "text-slate-900 dark:text-white"}`}>
-        Serendib<span className="text-emerald-500">.</span>
-      </span>
+      <img
+        src={siteConfig.logo}
+        alt={siteConfig.name}
+        className={`h-8 sm:h-9 w-auto object-contain transition ${light ? "brightness-0 invert" : ""}`}
+      />
     </Link>
   );
 }
@@ -126,17 +126,23 @@ export function SiteFooter() {
         <div className="lg:col-span-1">
           <Brand light />
           <p className="mt-6 text-sm leading-7 text-slate-400">
-            Small-group river, rainforest, and mountain day tours in Kitulgala and across Sri Lanka led by certified expert local guides.
+            {siteConfig.description}
           </p>
           <div className="mt-6 flex gap-3">
-            <Button variant="footerIcon" size="icon" aria-label="Instagram">
-              <Instagram className="size-4" />
+            <Button asChild variant="footerIcon" size="icon" aria-label="Instagram">
+              <a href={siteConfig.social.instagram.url} target="_blank" rel="noopener noreferrer" title="Follow us on Instagram">
+                <Instagram className="size-4" />
+              </a>
             </Button>
-            <Button variant="footerIcon" size="icon" aria-label="Facebook">
-              <Facebook className="size-4" />
+            <Button asChild variant="footerIcon" size="icon" aria-label="Facebook">
+              <a href={siteConfig.social.facebook.url} target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
+                <Facebook className="size-4" />
+              </a>
             </Button>
-            <Button variant="footerIcon" size="icon" aria-label="YouTube">
-              <Youtube className="size-4" />
+            <Button asChild variant="footerIcon" size="icon" aria-label="YouTube">
+              <a href={siteConfig.social.youtube.url} target="_blank" rel="noopener noreferrer" title="Subscribe to our YouTube channel">
+                <Youtube className="size-4" />
+              </a>
             </Button>
           </div>
         </div>
@@ -177,16 +183,16 @@ export function SiteFooter() {
           <h2 className="footer-title text-emerald-400">Contact Base</h2>
           <ul className="footer-list space-y-3 mt-4 text-sm text-slate-400">
             <li className="flex items-center gap-2.5">
-              <MapPin className="size-4 text-emerald-400" /> Kitulgala River Base, Sri Lanka
+              <MapPin className="size-4 text-emerald-400" /> {siteConfig.contact.address}
             </li>
             <li className="flex items-center gap-2.5">
-              <Phone className="size-4 text-emerald-400" /> +94 77 123 4567
+              <Phone className="size-4 text-emerald-400" /> {siteConfig.contact.phone}
             </li>
             <li className="flex items-center gap-2.5">
-              <Mail className="size-4 text-emerald-400" /> info@serendibadventures.com
+              <Mail className="size-4 text-emerald-400" /> {siteConfig.contact.email}
             </li>
             <li className="flex items-center gap-2.5">
-              <Compass className="size-4 text-emerald-400" /> Open Daily: 07:00 – 19:00
+              <Compass className="size-4 text-emerald-400" /> {siteConfig.contact.hours}
             </li>
           </ul>
         </div>

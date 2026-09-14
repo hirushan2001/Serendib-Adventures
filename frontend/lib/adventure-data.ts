@@ -428,23 +428,88 @@ export const adventures: Tour[] = [
 
 export const destinations: Destination[] = [
   {
-    id: "kitulgala",
-    name: "Kitulgala",
-    district: "Kegalle",
-    region: "Sabragamuwa Rainforest",
-    description: "Wild rivers and deep rainforest at Sri Lanka’s adventure capital.",
-    overview: "Kitulgala is the premier outdoor adventure sanctuary of Sri Lanka, situated along the rushing Kelani River. Famous as the film location for 'The Bridge on the River Kwai', it is surrounded by wet-zone rainforests ideal for white-water rafting, canyoning, and waterfall rappelling.",
-    toursCount: "12 Adventure Tours",
-    image: rafting,
-    bestTimeToVisit: "Year-round (Best: October to April)",
-    highlights: [
-      "Grade 3 & 4 White Water Rafting on Kelani River",
-      "Natural rock water slides & canyon jumping",
-      "Waterfall abseiling down 100ft cascades",
-      "Belilena prehistoric cave archaeological site"
-    ],
-    gallery: [rafting, canyoning, abseiling, camping],
-    size: "col-span-1 md:col-span-2 lg:col-span-2"
+    id: "nuwara-eliya",
+    name: "Nuwara Eliya",
+    district: "Nuwara Eliya",
+    region: "Central Highlands",
+    description: "Misty tea plantations, English architecture, and cascading waterfalls.",
+    overview: "Known as Little England, Nuwara Eliya sits at 1,868m elevation amidst rolling tea estates, Gregory Lake, and cool mountain breezes.",
+    toursCount: "15 Tours",
+    image: "https://images.unsplash.com/photo-1578564498539-74e2d3ec3eb1?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "February to May",
+    highlights: ["Tea factory visits & plucking", "Gregory Lake boating", "World's End Horton Plains trek"],
+    gallery: ["https://images.unsplash.com/photo-1578564498539-74e2d3ec3eb1?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
+  },
+  {
+    id: "kandy",
+    name: "Kandy",
+    district: "Kandy",
+    region: "Hill Capital",
+    description: "Sacred Tooth Relic temple, royal botanical gardens, and heritage culture.",
+    overview: "The last royal capital of Sri Lanka, surrounded by sacred hills, traditional Kandyan dance schools, and the serene Kandy Lake.",
+    toursCount: "25 Tours",
+    image: "https://images.unsplash.com/photo-1588598198321-9735fd52455b?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "December to April",
+    highlights: ["Temple of the Sacred Tooth Relic", "Peradeniya Royal Botanical Gardens", "Kandyan cultural show"],
+    gallery: ["https://images.unsplash.com/photo-1588598198321-9735fd52455b?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
+  },
+  {
+    id: "ella",
+    name: "Ella",
+    district: "Badulla",
+    region: "Central Highlands",
+    description: "Cloud forests, Nine Arch Bridge, Little Adam's Peak, and blue train rides.",
+    overview: "Ella is a high-altitude mountain haven surrounded by misty valleys, dramatic cliff precipices, green tea plantations, and iconic rail bridges.",
+    toursCount: "22 Tours",
+    image: "https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "January to March",
+    highlights: ["Nine Arch Demodara Railway Bridge", "Little Adam's Peak summit hike", "Ravana Waterfall pool swim"],
+    gallery: ["https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
+  },
+  {
+    id: "galle",
+    name: "Galle",
+    district: "Galle",
+    region: "Southern Coast",
+    description: "17th-century UNESCO Dutch fort, ocean ramparts, and cobblestone streets.",
+    overview: "Galle Fort combines centuries of Dutch colonial heritage with vibrant ocean ramparts, cobblestone shopping streets, and lighthouse vistas.",
+    toursCount: "25 Tours",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "November to April",
+    highlights: ["Dutch Fort rampart sunset walk", "Madu River mangrove safari", "Stilt fishermen viewing"],
+    gallery: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
+  },
+  {
+    id: "arugam-bay",
+    name: "Arugam Bay",
+    district: "Ampara",
+    region: "East Coast",
+    description: "World-famous point break surfing, lagoon safaris, and laid-back beach vibe.",
+    overview: "Arugam Bay is Sri Lanka's surfing paradise, offering legendary right-hand point breaks, Kumana bird sanctuary safaris, and beach bonfires.",
+    toursCount: "14 Tours",
+    image: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "May to September",
+    highlights: ["Main Point & Baby Point surfing", "Kumana National Park bird safari", "Pottuvil Lagoon canoe tour"],
+    gallery: ["https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
+  },
+  {
+    id: "bentota",
+    name: "Bentota",
+    district: "Galle",
+    region: "West Coast",
+    description: "Golden sandy beaches, water sports, river cruises, and paragliding.",
+    overview: "Bentota is the water sports capital of Sri Lanka, famous for jet skiing, banana boating, turtle hatcheries, and Brief Garden tours.",
+    toursCount: "18 Tours",
+    image: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "October to April",
+    highlights: ["Bentota Ganga river safari", "Kosgoda Sea Turtle Hatchery", "Jet ski & windsurfing sports"],
+    gallery: ["https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
   },
   {
     id: "sigiriya",
@@ -452,94 +517,55 @@ export const destinations: Destination[] = [
     district: "Matale",
     region: "Cultural Triangle",
     description: "Ancient 5th-century sky fortress atop a 200m monolithic rock.",
-    overview: "Sigiriya (Lion Rock) is a UNESCO World Heritage site featuring King Kasyapa's 5th-century palace complex, ancient water gardens, painted frescoes, and sweeping 360-degree views over central Sri Lankan jungle canopy.",
-    toursCount: "18 Heritage Tours",
+    overview: "Sigiriya (Lion Rock) is a UNESCO World Heritage site featuring King Kasyapa's 5th-century palace complex, ancient water gardens, and painted frescoes.",
+    toursCount: "18 Tours",
     image: "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?q=80&w=800&auto=format&fit=crop",
     bestTimeToVisit: "December to April",
-    highlights: [
-      "Ascend 1,200 steps through Lion Paw gate to rock summit",
-      "View ancient frescoes of celestial maidens",
-      "Pidurangala Rock sunrise hike",
-      "Minneriya National Park elephant gathering safaris"
-    ],
-    gallery: ["https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?q=80&w=800&auto=format&fit=crop", highlands, trekking],
-    size: "col-span-1 md:col-span-1 lg:col-span-1"
-  },
-  {
-    id: "ella",
-    name: "Ella",
-    district: "Badulla",
-    region: "Central Highlands",
-    description: "Cloud forests, mountain gaps, Nine Arch Bridge, and tea estates.",
-    overview: "Ella is a high-altitude mountain haven surrounded by misty valleys, dramatic cliff precipices, green tea plantations, and iconic rail bridges. It offers some of the best trekking trails in Asia.",
-    toursCount: "22 Highland Tours",
-    image: "https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=800&auto=format&fit=crop",
-    bestTimeToVisit: "January to March",
-    highlights: [
-      "Nine Arch Demodara Railway Bridge train spotting",
-      "Little Adam's Peak & Ella Rock summit treks",
-      "Diyaluma & Ravana waterfall pool swims",
-      "Scenic Kandy-to-Ella blue train journey"
-    ],
-    gallery: ["https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=800&auto=format&fit=crop", highlands, trekking],
-    size: "col-span-1 md:col-span-1 lg:col-span-1"
-  },
-  {
-    id: "sinharaja",
-    name: "Sinharaja",
-    district: "Ratnapura",
-    region: "Lowland Rainforest",
-    description: "A living UNESCO virgin tropical rainforest alive with endemic species.",
-    overview: "Sinharaja is Sri Lanka's last remaining primary tropical rainforest. Recognized as a UNESCO Biosphere Reserve, it harbors over 60% of Sri Lanka's endemic trees and rare bird species.",
-    toursCount: "10 Eco Expeditions",
-    image: trekking,
-    bestTimeToVisit: "December to April",
-    highlights: [
-      "Deep canopy birding for Sri Lanka Blue Magpie",
-      "Kekuna Ella waterfall rock pool bathing",
-      "Naturalist-guided eco tracking trails",
-      "Spot purple-faced langurs and endemic orchids"
-    ],
-    gallery: [trekking, canyoning, camping],
-    size: "col-span-1 md:col-span-2 lg:col-span-2"
+    highlights: ["Climb 1,200 steps to Lion Rock summit", "Pidurangala Rock sunrise hike", "Celestial maiden frescoes"],
+    gallery: ["https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
   },
   {
     id: "yala",
     name: "Yala",
     district: "Hambantota",
-    region: "South Coast Wildlands",
-    description: "Sri Lanka's premier wildlife national park with wild leopards and elephants.",
-    overview: "Yala National Park stretches across coastal drylands, forest glades, and brackish lagoons. It holds the world's highest density of Sri Lankan leopards alongside wild elephant herds and sloth bears.",
-    toursCount: "20 Wildlife Safaris",
+    region: "South Coast",
+    description: "Highest leopard density in the world, wild elephants, and sloth bears.",
+    overview: "Yala National Park stretches across coastal drylands, forest glades, and brackish lagoons holding the world's highest density of wild leopards.",
+    toursCount: "20 Tours",
     image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop",
     bestTimeToVisit: "February to July",
-    highlights: [
-      "4x4 Leopard tracking in Block 1",
-      "Wild elephant sightings around lakes",
-      "Coastal lagoon flamingo & crocodile safari",
-      "Luxury wilderness tented camping"
-    ],
-    gallery: ["https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop", camping, highlands],
-    size: "col-span-1 md:col-span-1 lg:col-span-1"
+    highlights: ["4x4 Leopard safari tracking", "Coastal lagoon crocodile viewing", "Luxury wilderness camping"],
+    gallery: ["https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
   },
   {
-    id: "galle",
-    name: "Galle Fort",
-    district: "Galle",
-    region: "Southern Coast",
-    description: "UNESCO 17th-century Dutch colonial fort city overlooking Indian Ocean.",
-    overview: "Galle Fort combines centuries of Dutch colonial heritage with vibrant ocean ramparts, cobblestone shopping streets, lighthouse vistas, and nearby stilt fishermen beaches.",
-    toursCount: "25 Coastal Tours",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
-    bestTimeToVisit: "November to April",
-    highlights: [
-      "Sunset walks along Dutch Fort ramparts",
-      "Madu River mangrove motorboat safari",
-      "Stilt fishermen photography at Koggala",
-      "Unawatuna & Jungle Beach sea snorkeling"
-    ],
-    gallery: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop", rafting, canyoning],
-    size: "col-span-1 md:col-span-1 lg:col-span-1"
+    id: "kitulgala",
+    name: "Kitulgala",
+    district: "Kegalle",
+    region: "Sabragamuwa Rainforest",
+    description: "White water rafting, canyoning, and waterfall rappelling capital.",
+    overview: "Kitulgala is the premier outdoor adventure sanctuary of Sri Lanka along the Kelani River, perfect for Grade 3/4 rafting and waterfall abseiling.",
+    toursCount: "12 Tours",
+    image: rafting,
+    bestTimeToVisit: "Year-round",
+    highlights: ["Grade 3 & 4 White Water Rafting", "Kataran-Oya 105ft Waterfall Abseiling", "Rainforest Gorge Canyoning"],
+    gallery: [rafting],
+    size: "col-span-1"
+  },
+  {
+    id: "colombo",
+    name: "Colombo",
+    district: "Colombo",
+    region: "Western Province",
+    description: "Vibrant capital city, Lotus Tower skyline, Lotus Bridge, and Pettah markets.",
+    overview: "Sri Lanka's commercial hub blending modern Port City oceanfront developments with colonial architecture, Gangaramaya temple, and street food markets.",
+    toursCount: "16 Tours",
+    image: "https://images.unsplash.com/photo-1578564498539-74e2d3ec3eb1?q=80&w=800&auto=format&fit=crop",
+    bestTimeToVisit: "January to March",
+    highlights: ["Lotus Tower observation deck", "Gangaramaya Seema Malaka Temple", "Colombo Port City promenade"],
+    gallery: ["https://images.unsplash.com/photo-1578564498539-74e2d3ec3eb1?q=80&w=800&auto=format&fit=crop"],
+    size: "col-span-1"
   }
 ];
 

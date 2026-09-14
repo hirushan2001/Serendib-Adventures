@@ -34,8 +34,8 @@ export function WhyChooseUs() {
         </div>
         <div>
           <span className="block text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">Crafted For Adventurers</span>
-          <h2 className="font-display text-3xl font-black leading-tight sm:text-4xl lg:text-5xl text-slate-900 dark:text-white">
-            Why Choose <span className="rounded-md bg-emerald-200/90 px-2.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Serendib</span>
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Why Choose <span className="rounded-xl bg-emerald-200 px-3.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Serendib</span>
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-400">
             We pair deep local Sri Lankan river knowledge with certified international safety standards, creating intimate small-group journeys into the wild.

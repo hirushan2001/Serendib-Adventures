@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { PopularPackagesCarousel } from "@/components/popular-packages";
 import { CategoryGrid } from "@/components/sections/category-grid";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
+import { UpcomingEventSection } from "@/components/sections/upcoming-event-section";
 import { DestinationsSpotlight } from "@/components/sections/destinations-spotlight";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { CtaBanner } from "@/components/sections/cta-banner";
@@ -21,6 +22,7 @@ export default function HomePage() {
       </section>
 
       <CategoryGrid categories={categories} />
+      <UpcomingEventSection />
       <WhyChooseUs />
       <DestinationsSpotlight destinations={destinations} />
       <TestimonialsSection reviews={reviews} />

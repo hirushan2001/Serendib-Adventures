@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, ChevronRight as ArrowRightIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Tour } from "@/lib/types";
 
 export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) {
@@ -22,18 +22,23 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
     <div className="relative w-full">
       {/* Top Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
-          Popular <span className="rounded-md bg-emerald-200/90 px-2.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Within Sri Lanka</span> Packages
+        <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Popular <span className="rounded-xl bg-emerald-200 px-3.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Within Sri Lanka</span> Packages
         </h2>
 
-        <div>
-          <Link
-            href="/adventures"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-5 py-2.5 text-xs font-bold text-white transition hover:bg-slate-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 shadow-md"
-          >
-            View All (200+) <ArrowRightIcon className="size-3.5" />
-          </Link>
-        </div>
+        <Link
+          href="/adventures"
+          className="group flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+        >
+          <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-0.5">
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+            </div>
+            <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+          </div>
+          <span>See all</span>
+        </Link>
       </div>
 
       {/* Cards Container with Side Floating Arrows & Clipped Overflow */}

@@ -4,52 +4,57 @@ import { Destination } from "@/lib/types";
 
 export function DestinationsSpotlight({ destinations }: { destinations: Destination[] }) {
   return (
-    <section className="page-shell py-12 md:py-16">
-      {/* Section Header */}
-      <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-        <div>
-          <span className="block text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1.5">
-            Beyond The Ordinary
-          </span>
-          <h2 className="font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl dark:text-white">
-            Explore <span className="rounded-md bg-emerald-200/90 px-2.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Sri Lanka</span>
-          </h2>
-        </div>
-        <p className="max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-          Six iconic landscapes. Countless ways to experience their untouched wild beauty.
-        </p>
+    <section className="page-shell py-10 md:py-14">
+      {/* Top Header Bar */}
+      <div className="mb-6 md:mb-7 flex items-center justify-between gap-4">
+        <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Top Destinations In <span className="rounded-xl bg-emerald-200 px-3.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Sri Lanka</span>
+        </h2>
+
+        {/* Right "See all" with theme-aligned emerald dots icon */}
+        <Link
+          href="/destinations"
+          className="group flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+        >
+          {/* 3 Emerald Dots Cluster Icon matching site theme */}
+          <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-0.5">
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+            </div>
+            <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+          </div>
+          <span>See all</span>
+        </Link>
       </div>
 
-      {/* Destinations Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-3">
-        {destinations.map((item) => (
+      {/* 5-Column Grid of Square Cards (Emerald Theme Aligned) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-5">
+        {destinations.slice(0, 10).map((item) => (
           <Link
             href="/destinations"
             key={item.id}
-            className="group relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-slate-900 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl"
+            className="group block cursor-pointer"
           >
-            <img
-              src={item.image}
-              alt={item.name}
-              loading="lazy"
-              width={1000}
-              height={1300}
-              className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7 text-white">
-              <span className="inline-block rounded-full bg-emerald-500 px-3.5 py-1 text-xs font-bold text-white shadow-md">
-                {item.toursCount}
-              </span>
-              <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white drop-shadow-md transition group-hover:text-emerald-300">
-                {item.name}
-              </h3>
-              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-300 line-clamp-2">{item.description}</p>
+            {/* Square Aspect Image Container with rounded-xl */}
+            <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 shadow-sm group-hover:shadow-md transition">
+              <img
+                src={item.image}
+                alt={item.name}
+                loading="lazy"
+                width={400}
+                height={400}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
             </div>
+
+            {/* Destination Name Directly Below Image */}
+            <h3 className="mt-2.5 font-bold text-sm sm:text-base text-slate-900 dark:text-white transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+              {item.name}
+            </h3>
           </Link>
         ))}
       </div>
     </section>
   );
 }
-

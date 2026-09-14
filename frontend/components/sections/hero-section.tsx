@@ -58,7 +58,7 @@ export function HeroSection() {
   const fullTitleWords = `${activeSlide.titleLine1} ${activeSlide.titleLine2}`.split(" ");
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-slate-950 pt-28 pb-16 text-white">
+    <section className="relative flex min-h-[85vh] lg:min-h-[720px] xl:min-h-[780px] max-h-[1050px] w-full flex-col justify-center overflow-hidden bg-slate-950 pt-28 pb-12 text-white">
       {/* Background Image Carousel Track */}
       {heroSlides.map((slide, index) => (
         <div
@@ -91,7 +91,7 @@ export function HeroSection() {
       </div>
 
       {/* Hero Content Shell */}
-      <div className="page-shell relative z-10 flex flex-1 flex-col justify-between pt-8 pb-6">
+      <div className="page-shell relative z-10 flex flex-col justify-center py-6">
         {/* Single Synchronized Outer AnimatePresence */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -99,7 +99,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.25 } }}
-            className="max-w-3xl pt-8 sm:pt-14"
+            className="max-w-4xl"
           >
             {/* Tag Line */}
             <motion.span
@@ -112,7 +112,7 @@ export function HeroSection() {
             </motion.span>
 
             {/* Word-by-Word Blur & Motion Title Heading */}
-            <h1 className="font-display text-4xl font-black leading-[1.08] sm:text-6xl lg:text-7xl tracking-tight text-white drop-shadow-md">
+            <h1 className="font-display text-4xl font-black leading-[1.08] sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-white drop-shadow-md">
               {fullTitleWords.map((word, index) => (
                 <motion.span
                   key={index}
@@ -139,19 +139,19 @@ export function HeroSection() {
                 delay: 0.08 + fullTitleWords.length * 0.05 + 0.05,
                 ease: "easeInOut",
               }}
-              className="mt-4 max-w-xl text-base text-slate-200 sm:text-lg font-medium drop-shadow leading-relaxed"
+              className="mt-4 max-w-2xl text-base text-slate-200 sm:text-lg lg:text-xl font-medium drop-shadow leading-relaxed"
             >
               {activeSlide.subtitle}
             </motion.p>
           </motion.div>
         </AnimatePresence>
 
-        {/* Embedded Floating Search Bar */}
+        {/* Embedded Floating Search Bar closely integrated below subtitle */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="pt-10 pb-4"
+          className="mt-8 lg:mt-12 max-w-5xl w-full"
         >
           <SearchFilterBar />
         </motion.div>
