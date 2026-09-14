@@ -74,6 +74,7 @@ function AdventuresContent() {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
               <Input
+                suppressHydrationWarning
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="h-12 rounded-xl pl-12 shadow-sm text-sm"
@@ -82,6 +83,7 @@ function AdventuresContent() {
             </div>
 
             <Button
+              suppressHydrationWarning
               variant="outline"
               className="md:hidden rounded-xl font-bold flex items-center justify-center gap-2"
               onClick={() => setShowMobileFilters(!showMobileFilters)}
@@ -93,6 +95,7 @@ function AdventuresContent() {
             <div className="flex items-center gap-2">
               <ArrowDownUp className="size-4 text-muted-foreground hidden md:block" />
               <select
+                suppressHydrationWarning
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 aria-label="Sort adventures"

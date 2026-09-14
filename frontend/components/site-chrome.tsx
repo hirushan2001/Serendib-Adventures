@@ -7,13 +7,21 @@ import { ArrowRight, Instagram, Facebook, Youtube, Menu, Mountain, X, Phone, Mai
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 
-const links = [
-  ["Home", "/"],
-  ["All Packages", "/adventures"],
-  ["Destinations", "/destinations"],
-  ["About", "/about"],
-  ["Contact", "/contact"],
-] as const;
+import { StaggeredMenu, MenuItem, SocialItem } from "@/components/StaggeredMenu";
+
+const menuItems: MenuItem[] = [
+  { label: "Home", ariaLabel: "Go to home page", link: "/" },
+  { label: "All Packages", ariaLabel: "Browse adventure packages", link: "/adventures" },
+  { label: "Destinations", ariaLabel: "Explore destinations", link: "/destinations" },
+  { label: "About", ariaLabel: "Learn about us", link: "/about" },
+  { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
+];
+
+const socialItems: SocialItem[] = [
+  { label: "Instagram", link: siteConfig.social.instagram.url },
+  { label: "Facebook", link: siteConfig.social.facebook.url },
+  { label: "YouTube", link: siteConfig.social.youtube.url },
+];
 
 export function Brand({ light = false, className = "h-10 sm:h-12 lg:h-[3.25rem]" }: { light?: boolean; className?: string }) {
   return (
@@ -29,7 +37,6 @@ export function Brand({ light = false, className = "h-10 sm:h-12 lg:h-[3.25rem]"
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -39,82 +46,67 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
-
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-slate-200/80 bg-white/90 py-2 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
-          : "bg-white py-2.5 border-b border-slate-100 dark:bg-slate-950 dark:border-slate-900"
-      }`}
-    >
-      <div className="page-shell flex items-center justify-between gap-4">
-        <Brand className="h-10 sm:h-12 lg:h-[3.25rem]" />
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+          scrolled
+            ? "border-b border-slate-200/80 bg-white/90 py-2 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
+            : "bg-white py-2.5 border-b border-slate-100 dark:bg-slate-950 dark:border-slate-900"
+        }`}
+      >
+        <div className="page-shell flex items-center justify-between gap-4">
+          <Brand className="h-10 sm:h-12 lg:h-[3.25rem]" />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-9 lg:flex" aria-label="Main navigation">
-          {links.map(([label, href]) => {
-            const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`text-sm font-semibold transition ${
-                  isActive
-                    ? "text-emerald-600 font-bold dark:text-emerald-400"
-                    : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-                }`}
-              >
-                {label}
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center gap-9 lg:flex" aria-label="Main navigation">
+            {menuItems.map((item) => {
+              const isActive = item.link === "/" ? pathname === "/" : pathname.startsWith(item.link);
+              return (
+                <Link
+                  key={item.link}
+                  href={item.link}
+                  className={`text-sm font-semibold transition ${
+                    isActive
+                      ? "text-emerald-600 font-bold dark:text-emerald-400"
+                      : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Right Action Button (Desktop) */}
+          <div className="hidden items-center gap-3 lg:flex">
+            <Button asChild className="rounded-full bg-slate-950 px-6 py-2 text-xs font-bold text-white transition hover:bg-slate-800 dark:bg-emerald-500 dark:text-white dark:hover:bg-emerald-600">
+              <Link href="/booking">
+                Plan Trip
               </Link>
-            );
-          })}
-        </nav>
-
-        {/* Right Action Button */}
-        <div className="hidden items-center gap-3 lg:flex">
-          <Button asChild className="rounded-full bg-slate-950 px-6 py-2 text-xs font-bold text-white transition hover:bg-slate-800 dark:bg-emerald-500 dark:text-white dark:hover:bg-emerald-600">
-            <Link href="/booking">
-              Plan Trip
-            </Link>
-          </Button>
-        </div>
-
-        {/* Mobile Toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="lg:hidden rounded-full"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Close menu" : "Open menu"}
-        >
-          {open ? <X /> : <Menu />}
-        </Button>
-      </div>
-
-      {/* Mobile Drawer */}
-      {open && (
-        <nav className="page-shell mt-3 grid border-t border-slate-100 bg-white py-6 backdrop-blur-xl lg:hidden dark:bg-slate-950 dark:border-slate-900">
-          <div className="flex flex-col gap-3">
-            {links.map(([label, href]) => (
-              <Link
-                key={href}
-                href={href}
-                className="rounded-xl px-4 py-3 font-display text-lg font-bold transition hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-slate-900"
-              >
-                {label}
-              </Link>
-            ))}
+            </Button>
           </div>
-          <Button asChild size="lg" className="mt-6 rounded-full font-bold bg-slate-950 text-white hover:bg-slate-800">
-            <Link href="/booking">
-              Plan Trip <ArrowRight className="ml-2 size-4" />
-            </Link>
-          </Button>
-        </nav>
-      )}
-    </header>
+        </div>
+      </header>
+
+      {/* ReactBits Staggered Mobile Menu (Fixed Overlay for Mobile/Tablet) */}
+      <div className="lg:hidden">
+        <StaggeredMenu
+          position="right"
+          items={menuItems}
+          socialItems={socialItems}
+          displaySocials
+          displayItemNumbering={false}
+          menuButtonColor="#0f172a"
+          openMenuButtonColor="#0f172a"
+          changeMenuColorOnOpen={false}
+          colors={["#ecfdf5", "#d1fae5", "#a7f3d0", "#10b981"]}
+          logoUrl={siteConfig.logo}
+          accentColor="#059669"
+          isFixed={true}
+        />
+      </div>
+    </>
   );
 }
 

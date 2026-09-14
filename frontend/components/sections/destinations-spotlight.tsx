@@ -36,15 +36,15 @@ export function DestinationsSpotlight({ destinations }: { destinations: Destinat
             key={item.id}
             className="group flex flex-col items-start cursor-pointer w-full"
           >
-            {/* Image Container with exact 216px height matching booklanka.com CSS */}
-            <div className="relative h-[216px] w-full overflow-hidden rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-slate-800 shadow-sm group-hover:shadow-md transition">
+            {/* Image Container with decreased roundness (rounded-lg) and fast zoom on hover */}
+            <div className="relative h-[216px] w-full overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800 shadow-sm group-hover:shadow-md transition">
               <img
                 src={item.image}
                 alt={item.name}
                 loading="lazy"
                 width={400}
                 height={216}
-                className="h-[216px] w-full object-cover origin-center transition-transform duration-200 ease-in-out group-hover:scale-105"
+                className="h-[216px] w-full object-cover origin-center transition-transform duration-150 ease-out group-hover:scale-110"
               />
             </div>
 

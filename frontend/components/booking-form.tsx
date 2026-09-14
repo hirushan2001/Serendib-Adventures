@@ -96,6 +96,7 @@ export function BookingForm({ compact = false }: { compact?: boolean }) {
           Selected Adventure
         </label>
         <select
+          suppressHydrationWarning
           value={formData.adventure}
           onChange={(e) => setFormData({ ...formData, adventure: e.target.value })}
           className="w-full h-10 rounded-xl border border-border bg-card px-3 text-xs font-semibold text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
@@ -113,6 +114,7 @@ export function BookingForm({ compact = false }: { compact?: boolean }) {
           <Calendar className="size-3.5 text-amber-500" /> Preferred Date
         </label>
         <Input
+          suppressHydrationWarning
           type="date"
           value={formData.date}
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
@@ -125,6 +127,7 @@ export function BookingForm({ compact = false }: { compact?: boolean }) {
           <Users className="size-3.5 text-amber-500" /> Number of Guests
         </label>
         <select
+          suppressHydrationWarning
           value={formData.guests}
           onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
           className="w-full h-10 rounded-xl border border-border bg-card px-3 text-xs font-semibold text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
