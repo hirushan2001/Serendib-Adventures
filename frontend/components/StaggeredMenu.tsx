@@ -44,7 +44,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displaySocials = true,
   displayItemNumbering = false,
   className,
-  logoUrl = '/images/logos/logo.png',
+  logoUrl = '/assets/logo.png',
   menuButtonColor = '#0f172a',
   openMenuButtonColor = '#0f172a',
   accentColor = '#059669',
@@ -66,7 +66,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const closeTweenRef = useRef<gsap.core.Tween | null>(null);
   const itemEntranceTweenRef = useRef<gsap.core.Tween | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
@@ -355,10 +355,13 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                   <li key={s.label + i} className="sm-socials-item transition-transform duration-200 hover:scale-110">
                     <SocialIcon
                       url={s.link}
+                      network={s.label.toLowerCase()}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      style={{ height: 36, width: 36 }}
+                      bgColor="transparent"
+                      fgColor="#059669"
+                      style={{ height: 32, width: 32 }}
                     />
                   </li>
                 ))}

@@ -23,7 +23,7 @@ export function AdventureCard({ adventure }: { adventure: Tour }) {
         
         {/* Category & Badge */}
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-forest/90 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur">
+          <span className="rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-md">
             {adventure.category}
           </span>
           {adventure.badge && (
@@ -35,6 +35,7 @@ export function AdventureCard({ adventure }: { adventure: Tour }) {
 
         {/* Wishlist Button */}
         <Button
+          suppressHydrationWarning
           variant="glassIcon"
           size="icon"
           className={`absolute right-4 top-4 rounded-full transition-colors ${
@@ -56,22 +57,22 @@ export function AdventureCard({ adventure }: { adventure: Tour }) {
             <span className="text-muted-foreground">({adventure.reviewsCount || 45})</span>
           </span>
           <span className="flex items-center gap-1">
-            <MapPin className="size-3.5 text-primary" />
+            <MapPin className="size-3.5 text-emerald-500" />
             {adventure.location || "Kitulgala"}
           </span>
         </div>
 
-        <h3 className="font-display text-xl font-bold leading-snug text-foreground transition group-hover:text-primary">
+        <h3 className="font-display text-xl font-bold leading-snug text-foreground transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
           {adventure.title}
         </h3>
 
         <div className="my-3 flex items-center gap-4 text-xs font-semibold text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <Clock3 className="size-4 text-primary" />
+            <Clock3 className="size-4 text-emerald-500" />
             {adventure.duration}
           </span>
           <span className="flex items-center gap-1.5">
-            <Mountain className="size-4 text-primary" />
+            <Mountain className="size-4 text-emerald-500" />
             {adventure.difficulty}
           </span>
         </div>
@@ -90,7 +91,7 @@ export function AdventureCard({ adventure }: { adventure: Tour }) {
               )}
             </div>
           </div>
-          <Button asChild size="sm" variant="default" className="rounded-xl font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">
+          <Button asChild size="sm" variant="default" className="rounded-xl font-bold bg-emerald-500 text-white hover:bg-emerald-600">
             <Link href={`/adventures/${adventure.slug}`}>
               Explore <ArrowUpRight className="ml-1 size-4" />
             </Link>
