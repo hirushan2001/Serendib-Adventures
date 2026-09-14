@@ -66,9 +66,6 @@ export function CategoryGrid({ categories }: { categories: Category[] }) {
     <section className="page-shell py-12 md:py-16">
       {/* Centered Header matching reference screenshot */}
       <div className="mb-12 text-center max-w-2xl mx-auto">
-        <span className="block text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">
-          Find Your Element
-        </span>
         <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Choose <span className="rounded-xl bg-emerald-200 px-3.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Your Adventure</span>
         </h2>

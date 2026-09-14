@@ -28,7 +28,7 @@ export function CtaBanner() {
             <Button asChild size="lg" className="rounded-full font-extrabold bg-emerald-500 text-white hover:bg-emerald-600 px-8">
               <Link href="/adventures">Explore All Adventures</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full font-bold border-white/30 text-white hover:bg-white/10 px-8">
+            <Button asChild size="lg" variant="ghost" className="rounded-full font-extrabold border border-white/40 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:border-white backdrop-blur-md px-8 shadow-sm">
               <Link href="/contact">Contact Our Local Team</Link>
             </Button>
           </div>

@@ -15,13 +15,13 @@ const links = [
   ["Contact", "/contact"],
 ] as const;
 
-export function Brand({ light = false }: { light?: boolean }) {
+export function Brand({ light = false, className = "h-10 sm:h-12 lg:h-[3.25rem]" }: { light?: boolean; className?: string }) {
   return (
-    <Link href="/" className="flex items-center gap-2.5" aria-label="Serendib Adventures home">
+    <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="Serendib Adventures home">
       <img
         src={siteConfig.logo}
         alt={siteConfig.name}
-        className={`h-8 sm:h-9 w-auto object-contain transition ${light ? "brightness-0 invert" : ""}`}
+        className={`w-auto object-contain transition ${className} ${light ? "brightness-0 invert" : ""}`}
       />
     </Link>
   );
@@ -45,12 +45,12 @@ export function SiteHeader() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-slate-200/80 bg-white/90 py-3.5 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
-          : "bg-white py-4 border-b border-slate-100 dark:bg-slate-950 dark:border-slate-900"
+          ? "border-b border-slate-200/80 bg-white/90 py-2 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
+          : "bg-white py-2.5 border-b border-slate-100 dark:bg-slate-950 dark:border-slate-900"
       }`}
     >
       <div className="page-shell flex items-center justify-between gap-4">
-        <Brand />
+        <Brand className="h-10 sm:h-12 lg:h-[3.25rem]" />
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-9 lg:flex" aria-label="Main navigation">

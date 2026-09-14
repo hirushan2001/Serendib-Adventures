@@ -131,6 +131,7 @@ export function UpcomingEventSection() {
 
                 {/* Top-Right Favorite Heart Icon */}
                 <button
+                  suppressHydrationWarning
                   onClick={(e) => toggleFavorite(item.id, e)}
                   aria-label="Add to wishlist"
                   className="absolute top-3 right-3 grid size-8 place-items-center rounded-full bg-white/90 dark:bg-slate-900/90 shadow-md backdrop-blur-md hover:scale-110 active:scale-95 transition"
