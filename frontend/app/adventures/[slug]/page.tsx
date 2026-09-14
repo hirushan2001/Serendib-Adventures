@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import { adventures, images } from "@/lib/adventure-data";
 import { AdventureBookingForm } from "@/components/adventure-booking-form";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return adventures.map((item) => ({
     slug: item.slug,
   }));
 }
 
-export default function AdventureDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
+export default async function AdventureDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const a = adventures.find((item) => item.slug === slug || item.id === slug);
 
   if (!a) {

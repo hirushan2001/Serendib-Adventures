@@ -17,7 +17,6 @@ export function CtaBanner() {
         />
         <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px]" />
         <div className="relative z-10 mx-auto max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-widest text-emerald-400 mb-2">The wild is calling</p>
           <h2 className="font-display text-4xl font-black sm:text-6xl text-white">
             Your next great Sri Lankan adventure starts here.
           </h2>

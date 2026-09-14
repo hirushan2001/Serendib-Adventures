@@ -179,15 +179,15 @@ export function TestimonialsSection({ reviews }: TestimonialsSectionProps) {
   return (
     <section className="page-shell py-12 md:py-16 overflow-hidden">
       {/* Theme Matched Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <div className="flex items-center justify-between gap-6 mb-8 md:mb-10">
         <div>
           <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             People Love <span className="rounded-xl bg-emerald-200 px-3.5 py-0.5 text-slate-900 dark:bg-emerald-500/30 dark:text-emerald-300 font-extrabold inline-block">Serendib</span>
           </h2>
         </div>
 
-        {/* Navigation Arrows on Top Right */}
-        <div className="flex items-center gap-3 shrink-0">
+        {/* Desktop Navigation Arrows on Top Right */}
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           <button
             suppressHydrationWarning
             onClick={handlePrev}
@@ -249,6 +249,26 @@ export function TestimonialsSection({ reviews }: TestimonialsSectionProps) {
             </div>
           ))}
         </motion.div>
+      </div>
+
+      {/* Mobile Navigation Arrows (Centered Below Testimonial Cards) */}
+      <div className="flex md:hidden items-center justify-center gap-4 mt-7">
+        <button
+          suppressHydrationWarning
+          onClick={handlePrev}
+          className="group size-11 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white hover:border-emerald-500 flex items-center justify-center transition-all duration-300 shadow-md active:scale-90"
+          aria-label="Previous testimonial"
+        >
+          <ChevronLeft className="size-5 transition-transform duration-200 group-hover:-translate-x-1" />
+        </button>
+        <button
+          suppressHydrationWarning
+          onClick={handleNext}
+          className="group size-11 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white hover:border-emerald-500 flex items-center justify-center transition-all duration-300 shadow-md active:scale-90"
+          aria-label="Next testimonial"
+        >
+          <ChevronRight className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+        </button>
       </div>
     </section>
   );

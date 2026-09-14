@@ -28,7 +28,7 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
 
         <Link
           href="/adventures"
-          className="group flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+          className="group hidden sm:flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
         >
           <div className="flex items-center gap-1">
             <div className="flex flex-col gap-0.5">
@@ -118,6 +118,23 @@ export function PopularPackagesCarousel({ adventures }: { adventures: Tour[] }) 
           <ChevronRight className="size-6" />
         </button>
 
+      </div>
+
+      {/* Mobile Centered "See all" below cards (matching reference screenshot) */}
+      <div className="mt-7 flex justify-center sm:hidden">
+        <Link
+          href="/adventures"
+          className="group inline-flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+        >
+          <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-0.5">
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+            </div>
+            <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+          </div>
+          <span>See all</span>
+        </Link>
       </div>
     </div>
   );

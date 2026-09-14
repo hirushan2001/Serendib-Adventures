@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { Heart, MapPin, Clock, ArrowRight, Star, Calendar, Bus } from "lucide-react";
+import { Heart, MapPin, Clock, ArrowRight, Star, Calendar, Bus, ChevronLeft, ChevronRight } from "lucide-react";
 import { images } from "@/lib/adventure-data";
 
 export interface ScheduledEvent {
@@ -71,11 +71,22 @@ const scheduledEvents: ScheduledEvent[] = [
 
 export function UpcomingEventSection() {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleScroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth"
+      });
+    }
   };
 
   return (
@@ -90,7 +101,7 @@ export function UpcomingEventSection() {
 
         <Link
           href="/booking"
-          className="group flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+          className="group hidden lg:flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition"
         >
           <div className="flex items-center gap-1">
             <div className="flex flex-col gap-0.5">
@@ -103,99 +114,148 @@ export function UpcomingEventSection() {
         </Link>
       </div>
 
-      {/* 4 Cards Grid of Scheduled Events */}
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {scheduledEvents.map((item) => {
-          const isFav = !!favorites[item.id];
+      {/* Cards Carousel Container with Side Floating Arrows */}
+      <div className="relative group px-1">
+        
+        {/* Floating Left Arrow */}
+        <button
+          suppressHydrationWarning
+          onClick={() => handleScroll("left")}
+          aria-label="Scroll left"
+          className="absolute -left-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
+        >
+          <ChevronLeft className="size-6" />
+        </button>
 
-          return (
-            <Link
-              href={`/adventures/${item.slug}`}
-              key={item.id}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              {/* Image Header with Price & Badge Overlays */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+        {/* Outer Clipped Overflow Window */}
+        <div className="overflow-hidden rounded-3xl">
+          {/* Cards Scroll Track */}
+          <div
+            ref={scrollRef}
+            className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 pt-1"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {scheduledEvents.map((item) => {
+              const isFav = !!favorites[item.id];
 
-                {/* Top-Left Emerald Price Badge */}
-                <div className="absolute top-0 left-0 bg-emerald-500 font-black text-white text-xs sm:text-sm px-3.5 py-1.5 rounded-br-2xl shadow-md flex items-center gap-1">
-                  <span>Price</span>
-                  <span className="text-sm sm:text-base">{item.price}</span>
-                </div>
-
-                {/* Top-Right Favorite Heart Icon */}
-                <button
-                  suppressHydrationWarning
-                  onClick={(e) => toggleFavorite(item.id, e)}
-                  aria-label="Add to wishlist"
-                  className="absolute top-3 right-3 grid size-8 place-items-center rounded-full bg-white/90 dark:bg-slate-900/90 shadow-md backdrop-blur-md hover:scale-110 active:scale-95 transition"
+              return (
+                <Link
+                  href={`/adventures/${item.slug}`}
+                  key={item.id}
+                  className="group/card relative flex aspect-auto w-[80vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3.75rem)/4)]"
                 >
-                  <Heart
-                    className={`size-4 transition ${
-                      isFav
-                        ? "fill-emerald-500 text-emerald-500"
-                        : "text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400"
-                    }`}
-                  />
-                </button>
+                  {/* Image Header with Price & Badge Overlays */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                    />
 
-                {/* Bottom-Left Location Pill Tag */}
-                <div className="absolute bottom-2.5 left-3 rounded-lg bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-slate-800 dark:text-slate-200 shadow-sm flex items-center gap-1.5">
-                  <MapPin className="size-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  <span className="truncate max-w-[200px]">{item.locationTag}</span>
-                </div>
-              </div>
-
-              {/* Card Body Content */}
-              <div className="p-5 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-display font-extrabold text-base sm:text-lg text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">
-                    {item.title}
-                  </h3>
-
-                  {/* Scheduled Event Specific Details */}
-                  <div className="mt-3.5 space-y-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                      <Calendar className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span className="font-bold text-emerald-700 dark:text-emerald-300">{item.eventDate}</span>
+                    {/* Top-Left Emerald Price Badge */}
+                    <div className="absolute top-0 left-0 bg-emerald-500 font-black text-white text-xs sm:text-sm px-3.5 py-1.5 rounded-br-2xl shadow-md flex items-center gap-1">
+                      <span>Price</span>
+                      <span className="text-sm sm:text-base">{item.price}</span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                      <Bus className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{item.pickupInfo}</span>
-                    </div>
+                    {/* Top-Right Favorite Heart Icon */}
+                    <button
+                      suppressHydrationWarning
+                      onClick={(e) => toggleFavorite(item.id, e)}
+                      aria-label="Add to wishlist"
+                      className="absolute top-3 right-3 grid size-8 place-items-center rounded-full bg-white/90 dark:bg-slate-900/90 shadow-md backdrop-blur-md hover:scale-110 active:scale-95 transition"
+                    >
+                      <Heart
+                        className={`size-4 transition ${
+                          isFav
+                            ? "fill-emerald-500 text-emerald-500"
+                            : "text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400"
+                        }`}
+                      />
+                    </button>
 
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                      <Clock className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{item.spotsLeft}</span>
+                    {/* Bottom-Left Location Pill Tag */}
+                    <div className="absolute bottom-2.5 left-3 rounded-lg bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-slate-800 dark:text-slate-200 shadow-sm flex items-center gap-1.5">
+                      <MapPin className="size-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                      <span className="truncate max-w-[200px]">{item.locationTag}</span>
                     </div>
                   </div>
 
-                  {/* Badge Pill */}
-                  <div className="mt-3.5">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-0.5 text-[11px] font-extrabold text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                      <Star className="size-3 fill-emerald-500 text-emerald-500" />
-                      {item.badge}
-                    </span>
-                  </div>
-                </div>
+                  {/* Card Body Content */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-display font-extrabold text-base sm:text-lg text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover/card:text-emerald-600 dark:group-hover/card:text-emerald-400 transition">
+                        {item.title}
+                      </h3>
 
-                {/* Card Footer */}
-                <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-                  <span className="inline-flex items-center gap-1 text-xs font-black text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition">
-                    Book Event <ArrowRight className="size-3.5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+                      {/* Scheduled Event Specific Details */}
+                      <div className="mt-3.5 space-y-2">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                          <Calendar className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <span className="font-bold text-emerald-700 dark:text-emerald-300">{item.eventDate}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                          <Bus className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <span>{item.pickupInfo}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                          <Clock className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <span>{item.spotsLeft}</span>
+                        </div>
+                      </div>
+
+                      {/* Badge Pill */}
+                      <div className="mt-3.5">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-0.5 text-[11px] font-extrabold text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                          <Star className="size-3 fill-emerald-500 text-emerald-500" />
+                          {item.badge}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card Footer */}
+                    <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
+                      <span className="inline-flex items-center gap-1 text-xs font-black text-emerald-600 dark:text-emerald-400 group-hover/card:translate-x-1 transition">
+                        Book Event <ArrowRight className="size-3.5" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Floating Right Arrow */}
+        <button
+          suppressHydrationWarning
+          onClick={() => handleScroll("right")}
+          aria-label="Scroll right"
+          className="absolute -right-3 top-1/2 z-30 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-900 shadow-2xl border border-slate-200 transition-all hover:bg-slate-900 hover:text-white active:scale-95 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-emerald-500"
+        >
+          <ChevronRight className="size-6" />
+        </button>
+
+      </div>
+
+      {/* Mobile/Tablet Centered "See all" below cards */}
+      <div className="mt-7 flex justify-center lg:hidden">
+        <Link
+          href="/booking"
+          className="group inline-flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition"
+        >
+          <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-0.5">
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+              <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+            </div>
+            <span className="size-1 rounded-full bg-emerald-500 group-hover:bg-emerald-600 transition" />
+          </div>
+          <span>See all</span>
+        </Link>
       </div>
     </section>
   );
