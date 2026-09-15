@@ -121,6 +121,7 @@ export function StaggeredMenu({
             onClick={onClose}
             aria-label="Close menu"
             className="grid size-11 place-items-center rounded-full bg-slate-900 border border-slate-800 text-white shadow-lg transition hover:bg-emerald-500 hover:text-slate-950 active:scale-95"
+            suppressHydrationWarning
           >
             <X className="size-6" />
           </button>

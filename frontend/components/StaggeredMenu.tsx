@@ -316,6 +316,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           aria-controls="staggered-menu-panel"
           onClick={toggleMenu}
           type="button"
+          suppressHydrationWarning
         >
           {open ? (
             <CloseIcon className="size-6 text-slate-900 transition-transform duration-300 hover:rotate-90" />
