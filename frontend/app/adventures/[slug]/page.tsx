@@ -1,10 +1,11 @@
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ChevronRight, Clock3, MapPin, ShieldCheck, Star, Users, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { adventures, images } from "@/lib/adventure-data";
 import { AdventureBookingForm } from "@/components/adventure-booking-form";
+import { PhotoGallery } from "@/components/photo-gallery";
 
 export async function generateStaticParams() {
   return adventures.map((item) => ({
@@ -20,55 +21,39 @@ export default async function AdventureDetailPage({ params }: { params: Promise<
     notFound();
   }
 
+  const galleryImages = [
+    a.gallery?.[0] || images.canyoning,
+    a.gallery?.[1] || images.trekking,
+    a.gallery?.[2] || images.abseiling,
+    a.gallery?.[3] || images.camping,
+    images.highlands,
+    images.rafting,
+  ];
+
   return (
     <>
-      {/* Gallery & Header Hero */}
-      <section className="page-shell grid min-h-[68vh] gap-4 pt-24 pb-8 md:grid-cols-[1.5fr_.5fr]">
-        <div className="relative min-h-[30rem] overflow-hidden rounded-[2.5rem] bg-slate-900 shadow-2xl">
-          <img
-            src={a.image}
-            alt={a.title}
-            width={1400}
-            height={1000}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent p-8 sm:p-12 pt-28 text-white">
-            <div className="flex flex-wrap gap-2 mb-3">
-              <span className="rounded-full bg-emerald-500 px-3.5 py-1 text-xs font-bold text-white shadow-md">
-                {a.category}
-              </span>
-              <span className="rounded-full bg-black/40 border border-white/20 px-3.5 py-1 text-xs font-semibold backdrop-blur text-white">
-                {a.location}
-              </span>
-            </div>
-            <h1 className="font-display text-3xl font-extrabold sm:text-5xl lg:text-6xl text-white tracking-tight drop-shadow-md">
-              {a.title}
-            </h1>
-          </div>
+      {/* Header Title & Badges Top */}
+      <section className="page-shell pt-24 pb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="rounded-full bg-emerald-500 px-3.5 py-1 text-xs font-bold text-white shadow-sm">
+            {a.category}
+          </span>
+          <span className="rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3.5 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200">
+            {a.location}
+          </span>
         </div>
+        <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+          {a.title}
+        </h1>
+      </section>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
-          <div className="overflow-hidden rounded-[2rem] shadow-md bg-slate-900">
-            <img
-              src={a.gallery?.[0] || images.canyoning}
-              alt="Sri Lanka river & rainforest experience"
-              loading="lazy"
-              width={600}
-              height={500}
-              className="h-full min-h-44 w-full object-cover transition duration-500 hover:scale-105"
-            />
-          </div>
-          <div className="overflow-hidden rounded-[2rem] shadow-md bg-slate-900">
-            <img
-              src={a.gallery?.[1] || images.trekking}
-              alt="Kitulgala adventure trail"
-              loading="lazy"
-              width={600}
-              height={500}
-              className="h-full min-h-44 w-full object-cover transition duration-500 hover:scale-105"
-            />
-          </div>
-        </div>
+      {/* Gallery Hero */}
+      <section className="page-shell pb-8">
+        <PhotoGallery
+          mainImage={a.image}
+          galleryImages={galleryImages}
+          title={a.title}
+        />
       </section>
 
       {/* Detail Content */}

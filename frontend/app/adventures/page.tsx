@@ -1,13 +1,48 @@
 "use client";
 
-import { useMemo, useState, useEffect, Suspense } from "react";
+import { useMemo, useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, SlidersHorizontal, MapPin, Compass, Shield, ArrowDownUp } from "lucide-react";
+import { Search, SlidersHorizontal, MapPin, Compass, Shield, ArrowDownUp, ChevronDown, Check, RotateCcw, Filter } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { AdventureCard } from "@/components/adventure-card";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { adventures, images } from "@/lib/adventure-data";
+
+const categoryOptions = [
+  { id: "all", label: "All Categories" },
+  { id: "white-water-rafting", label: "White Water Rafting" },
+  { id: "canyoning", label: "Jungle Canyoning" },
+  { id: "waterfall-abseiling", label: "Waterfall Abseiling" },
+  { id: "jungle-trekking", label: "Rainforest Trekking" },
+  { id: "camping-nature", label: "Camping & Glamping" },
+  { id: "cultural-safari", label: "Safari & Heritage" },
+];
+
+const destinationOptions = [
+  { id: "all", label: "All Destinations" },
+  { id: "kitulgala", label: "Kitulgala" },
+  { id: "sigiriya", label: "Sigiriya" },
+  { id: "ella", label: "Ella Highlands" },
+  { id: "sinharaja", label: "Sinharaja Rainforest" },
+  { id: "yala", label: "Yala Safari" },
+  { id: "galle", label: "Galle Dutch Fort" },
+];
+
+function parseTourHours(durationStr: string): number {
+  if (/full\s*day/i.test(durationStr) || /1\s*day/i.test(durationStr)) return 12;
+  if (/(\d+)\s*day/i.test(durationStr)) {
+    const match = durationStr.match(/(\d+)\s*day/i);
+    return match ? parseInt(match[1], 10) * 12 : 24;
+  }
+  const matches = durationStr.match(/(\d+)/g);
+  if (matches && matches.length > 0) {
+    const nums = matches.map(Number);
+    return Math.max(...nums);
+  }
+  return 12;
+}
 
 function AdventuresContent() {
   const searchParams = useSearchParams();
@@ -15,18 +50,49 @@ function AdventuresContent() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDestination, setSelectedDestination] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [maxDuration, setMaxDuration] = useState<number>(12);
+  const [maxPrice, setMaxPrice] = useState<number>(500);
   const [sortBy, setSortBy] = useState("recommended");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  // Dropdown open states
+  const [isCatOpen, setIsCatOpen] = useState(false);
+  const [isLocOpen, setIsLocOpen] = useState(false);
+  const [isDiffOpen, setIsDiffOpen] = useState(false);
+
+  const catRef = useRef<HTMLDivElement>(null);
+  const locRef = useRef<HTMLDivElement>(null);
+  const diffRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (catRef.current && !catRef.current.contains(event.target as Node)) {
+        setIsCatOpen(false);
+      }
+      if (locRef.current && !locRef.current.contains(event.target as Node)) {
+        setIsLocOpen(false);
+      }
+      if (diffRef.current && !diffRef.current.contains(event.target as Node)) {
+        setIsDiffOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const cat = searchParams.get("category");
     const dest = searchParams.get("destination");
     const diff = searchParams.get("difficulty");
     const kw = searchParams.get("keyword");
+    const dur = searchParams.get("maxDuration");
+    const pr = searchParams.get("maxPrice");
     if (cat) setSelectedCategory(cat);
     if (dest) setSelectedDestination(dest);
     if (diff) setSelectedDifficulty(diff);
     if (kw) setQuery(kw);
+    if (dur) setMaxDuration(Number(dur));
+    if (pr) setMaxPrice(Number(pr));
   }, [searchParams]);
 
   const filtered = useMemo(() => {
@@ -51,7 +117,10 @@ function AdventuresContent() {
           a.location.toLowerCase().includes(query.toLowerCase()) ||
           a.category.toLowerCase().includes(query.toLowerCase());
 
-        return matchesCategory && matchesDestination && matchesDifficulty && matchesQuery;
+        const matchesDuration = parseTourHours(a.duration) <= maxDuration;
+        const matchesPrice = a.price <= maxPrice;
+
+        return matchesCategory && matchesDestination && matchesDifficulty && matchesQuery && matchesDuration && matchesPrice;
       })
       .sort((a, b) => {
         if (sortBy === "price-low") return a.price - b.price;
@@ -59,7 +128,7 @@ function AdventuresContent() {
         if (sortBy === "rating") return b.rating - a.rating;
         return b.reviewsCount - a.reviewsCount;
       });
-  }, [query, selectedCategory, selectedDestination, selectedDifficulty, sortBy]);
+  }, [query, selectedCategory, selectedDestination, selectedDifficulty, maxDuration, maxPrice, sortBy]);
 
   return (
     <>
@@ -111,105 +180,260 @@ function AdventuresContent() {
 
           <div className="grid gap-10 pt-8 lg:grid-cols-[16rem_1fr]">
             {/* Sidebar Filters */}
-            <aside className={`${showMobileFilters ? "block" : "hidden"} lg:block space-y-8 rounded-[2rem] border border-border bg-card p-6 shadow-sm`}>
-              {/* Category Filter */}
-              <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  <Compass className="size-4" /> Category
+            <aside className={`${showMobileFilters ? "block" : "hidden"} lg:block h-fit sticky top-28 space-y-6 rounded-[2rem] border border-border bg-card p-6 shadow-sm`}>
+              {/* Filter Header with Reset */}
+              <div className="flex items-center justify-between pb-4 border-b border-border">
+                <h3 className="font-bold text-foreground text-sm flex items-center gap-2">
+                  <Filter className="size-4 text-[#184E70] dark:text-[#38bdf8]" />
+                  <span>Filter Tours</span>
                 </h3>
-                <div className="mt-3 flex flex-col gap-1">
-                  {[
-                    { id: "all", label: "All Categories" },
-                    { id: "white-water-rafting", label: "White Water Rafting" },
-                    { id: "canyoning", label: "Jungle Canyoning" },
-                    { id: "waterfall-abseiling", label: "Waterfall Abseiling" },
-                    { id: "jungle-trekking", label: "Rainforest Trekking" },
-                    { id: "camping-nature", label: "Camping & Glamping" },
-                    { id: "cultural-safari", label: "Safari & Heritage" },
-                  ].map((cat) => (
-                    <Button
-                      key={cat.id}
-                      variant={selectedCategory === cat.id ? "default" : "ghost"}
-                      size="sm"
-                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
-                        selectedCategory === cat.id ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
-                      }`}
-                      onClick={() => setSelectedCategory(cat.id)}
-                    >
-                      {cat.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Destination Filter */}
-              <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  <MapPin className="size-4" /> Location
-                </h3>
-                <div className="mt-3 flex flex-col gap-1">
-                  {[
-                    { id: "all", label: "All Destinations" },
-                    { id: "kitulgala", label: "Kitulgala" },
-                    { id: "sigiriya", label: "Sigiriya" },
-                    { id: "ella", label: "Ella Highlands" },
-                    { id: "sinharaja", label: "Sinharaja Rainforest" },
-                    { id: "yala", label: "Yala Safari" },
-                    { id: "galle", label: "Galle Dutch Fort" },
-                  ].map((loc) => (
-                    <Button
-                      key={loc.id}
-                      variant={selectedDestination === loc.id ? "default" : "ghost"}
-                      size="sm"
-                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
-                        selectedDestination === loc.id ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
-                      }`}
-                      onClick={() => setSelectedDestination(loc.id)}
-                    >
-                      {loc.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Difficulty Filter */}
-              <div>
-                <h3 className="eyebrow flex items-center gap-1.5 font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  <Shield className="size-4" /> Difficulty Level
-                </h3>
-                <div className="mt-3 flex flex-col gap-1">
-                  {["all", "Easy", "Moderate", "Active", "Challenging"].map((diff) => (
-                    <Button
-                      key={diff}
-                      variant={selectedDifficulty === diff ? "default" : "ghost"}
-                      size="sm"
-                      className={`justify-start rounded-xl font-semibold text-xs text-left ${
-                        selectedDifficulty === diff ? "bg-emerald-500 text-white hover:bg-emerald-600 font-bold" : ""
-                      }`}
-                      onClick={() => setSelectedDifficulty(diff)}
-                    >
-                      {diff === "all" ? "All Levels" : diff}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Clear Filters */}
-              {(selectedCategory !== "all" || selectedDestination !== "all" || selectedDifficulty !== "all" || query) && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full rounded-xl text-xs font-bold"
+                <button
+                  suppressHydrationWarning
+                  type="button"
                   onClick={() => {
                     setSelectedCategory("all");
                     setSelectedDestination("all");
                     setSelectedDifficulty("all");
+                    setMaxDuration(12);
+                    setMaxPrice(500);
                     setQuery("");
                   }}
+                  className="text-xs text-[#184E70] dark:text-[#38bdf8] font-bold hover:underline flex items-center gap-1 cursor-pointer"
                 >
-                  Reset All Filters
-                </Button>
-              )}
+                  <RotateCcw className="size-3" />
+                  <span>Reset</span>
+                </button>
+              </div>
+
+              {/* Category Filter Dropdown */}
+              <div className="relative" ref={catRef}>
+                <label className="block text-xs uppercase tracking-wider font-bold text-[#184E70] dark:text-[#38bdf8] mb-2 flex items-center gap-1.5">
+                  <Compass className="size-4" /> Category
+                </label>
+                <button
+                  suppressHydrationWarning
+                  type="button"
+                  onClick={() => {
+                    setIsCatOpen(!isCatOpen);
+                    setIsLocOpen(false);
+                    setIsDiffOpen(false);
+                  }}
+                  className="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-foreground font-semibold rounded-xl px-3.5 py-3 hover:border-[#184E70] transition-all cursor-pointer"
+                >
+                  <span className="truncate">
+                    {categoryOptions.find((c) => c.id === selectedCategory)?.label || "All Categories"}
+                  </span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                      isCatOpen ? "rotate-180 text-[#184E70]" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isCatOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-800 z-50 max-h-60 overflow-y-auto p-1.5 space-y-1"
+                    >
+                      {categoryOptions.map((cat) => {
+                        const isSelected = selectedCategory === cat.id;
+                        return (
+                          <button
+                            suppressHydrationWarning
+                            key={cat.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedCategory(cat.id);
+                              setIsCatOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between text-left text-xs px-3 py-2.5 rounded-lg transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-[#184E70] text-white font-bold"
+                                : "text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-[#184E70]"
+                            }`}
+                          >
+                            <span>{cat.label}</span>
+                            {isSelected && <Check className="size-3.5 text-white" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Destination Filter Dropdown */}
+              <div className="relative" ref={locRef}>
+                <label className="block text-xs uppercase tracking-wider font-bold text-[#184E70] dark:text-[#38bdf8] mb-2 flex items-center gap-1.5">
+                  <MapPin className="size-4" /> Location
+                </label>
+                <button
+                  suppressHydrationWarning
+                  type="button"
+                  onClick={() => {
+                    setIsLocOpen(!isLocOpen);
+                    setIsCatOpen(false);
+                    setIsDiffOpen(false);
+                  }}
+                  className="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-foreground font-semibold rounded-xl px-3.5 py-3 hover:border-[#184E70] transition-all cursor-pointer"
+                >
+                  <span className="truncate">
+                    {destinationOptions.find((d) => d.id === selectedDestination)?.label || "All Destinations"}
+                  </span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                      isLocOpen ? "rotate-180 text-[#184E70]" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isLocOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-800 z-50 max-h-60 overflow-y-auto p-1.5 space-y-1"
+                    >
+                      {destinationOptions.map((loc) => {
+                        const isSelected = selectedDestination === loc.id;
+                        return (
+                          <button
+                            suppressHydrationWarning
+                            key={loc.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedDestination(loc.id);
+                              setIsLocOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between text-left text-xs px-3 py-2.5 rounded-lg transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-[#184E70] text-white font-bold"
+                                : "text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-[#184E70]"
+                            }`}
+                          >
+                            <span>{loc.label}</span>
+                            {isSelected && <Check className="size-3.5 text-white" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Difficulty Level Dropdown */}
+              <div className="relative" ref={diffRef}>
+                <label className="block text-xs uppercase tracking-wider font-bold text-[#184E70] dark:text-[#38bdf8] mb-2 flex items-center gap-1.5">
+                  <Shield className="size-4" /> Difficulty Level
+                </label>
+                <button
+                  suppressHydrationWarning
+                  type="button"
+                  onClick={() => {
+                    setIsDiffOpen(!isDiffOpen);
+                    setIsCatOpen(false);
+                    setIsLocOpen(false);
+                  }}
+                  className="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-foreground font-semibold rounded-xl px-3.5 py-3 hover:border-[#184E70] transition-all cursor-pointer"
+                >
+                  <span className="truncate">
+                    {selectedDifficulty === "all" ? "All Levels" : selectedDifficulty}
+                  </span>
+                  <ChevronDown
+                    className={`size-4 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                      isDiffOpen ? "rotate-180 text-[#184E70]" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isDiffOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-slate-800 z-50 max-h-60 overflow-y-auto p-1.5 space-y-1"
+                    >
+                      {["all", "Easy", "Moderate", "Active", "Challenging"].map((diff) => {
+                        const isSelected = selectedDifficulty === diff;
+                        const label = diff === "all" ? "All Levels" : diff;
+                        return (
+                          <button
+                            suppressHydrationWarning
+                            key={diff}
+                            type="button"
+                            onClick={() => {
+                              setSelectedDifficulty(diff);
+                              setIsDiffOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between text-left text-xs px-3 py-2.5 rounded-lg transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-[#184E70] text-white font-bold"
+                                : "text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-[#184E70]"
+                            }`}
+                          >
+                            <span>{label}</span>
+                            {isSelected && <Check className="size-3.5 text-white" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Max Duration Slider */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">MAX DURATION</label>
+                  <span className="text-xs font-bold text-[#184E70] dark:text-[#38bdf8]">{maxDuration} Hours</span>
+                </div>
+                <input
+                  suppressHydrationWarning
+                  type="range"
+                  min="4"
+                  max="12"
+                  step="1"
+                  value={maxDuration}
+                  onChange={(e) => setMaxDuration(Number(e.target.value))}
+                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#184E70]"
+                />
+                <div className="flex justify-between text-[11px] text-muted-foreground mt-1 font-semibold">
+                  <span>4 hrs</span>
+                  <span>8 hrs</span>
+                  <span>12 hrs</span>
+                </div>
+              </div>
+
+              {/* Max Price Slider */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">MAX PRICE</label>
+                  <span className="text-xs font-bold text-[#184E70] dark:text-[#38bdf8]">${maxPrice}</span>
+                </div>
+                <input
+                  suppressHydrationWarning
+                  type="range"
+                  min="50"
+                  max="500"
+                  step="5"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#184E70]"
+                />
+                <div className="flex justify-between text-[11px] text-muted-foreground mt-1 font-semibold">
+                  <span>$50</span>
+                  <span>$250</span>
+                  <span>$500</span>
+                </div>
+              </div>
             </aside>
 
             {/* Results Grid */}
@@ -221,7 +445,7 @@ function AdventuresContent() {
               </div>
 
               {filtered.length ? (
-                <div className="grid gap-8 md:grid-cols-2">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {filtered.map((item) => (
                     <AdventureCard key={item.id} adventure={item} />
                   ))}
@@ -234,11 +458,13 @@ function AdventuresContent() {
                   </p>
                   <Button
                     variant="default"
-                    className="mt-6 rounded-full font-bold bg-emerald-500 text-white hover:bg-emerald-600"
+                    className="mt-6 rounded-full font-bold bg-[#184E70] text-white hover:bg-[#123d58]"
                     onClick={() => {
                       setSelectedCategory("all");
                       setSelectedDestination("all");
                       setSelectedDifficulty("all");
+                      setMaxDuration(12);
+                      setMaxPrice(500);
                       setQuery("");
                     }}
                   >
